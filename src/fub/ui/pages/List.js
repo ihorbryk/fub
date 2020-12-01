@@ -1,19 +1,17 @@
 import React from "react";
 import Layout from "../Layout";
-import { getEntities } from "../../services/entity";
+import { getModels } from "../../services/model";
 import { Link, useParams } from "react-router-dom";
-import { PageHeader } from "../elements";
 
 export default function List() {
-  const entiyies = getEntities();
-  const { entitySlug } = useParams();
+  const models = getModels();
+  const { modelSlug } = useParams();
 
-  const currentEntity = entiyies.find((entity) => entity.slug === entitySlug);
+  const currentEntity = models.find((model) => model.slug === modelSlug);
   const listFieldNames = currentEntity.getListFieldNames();
 
   return (
-    <Layout>
-      <PageHeader title={currentEntity.name} />
+    <Layout title={`Select ${currentEntity.name} for edit`}>
       <div>
         <table className="table-auto border border-collapse w-full">
           <thead>

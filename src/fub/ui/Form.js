@@ -3,8 +3,7 @@ import React from "react";
 export default function Form(props) {
   const [values, setValues] = React.useState(props.initValues);
 
-  // TODO: rename to handleFieldChange
-  const handleFieldUpdate = (key, value) => {
+  const handleFieldChange = (key, value) => {
     setValues({ ...values, [key]: value });
   };
 
@@ -13,5 +12,32 @@ export default function Form(props) {
     props.onSubmit(values);
   };
 
-  return <>{props.children({ values, handleFieldUpdate, handleFormSubmit })}</>;
+  return (
+    <>
+      {props.children({
+        values,
+        handleFieldChange,
+        handleFormSubmit,
+      })}
+    </>
+  );
+}
+
+export function Input(props) {
+  return (
+    <input
+      {...props}
+      type="text"
+      className="p-2 border mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md"
+    />
+  );
+}
+
+export function TextArea(props) {
+  return (
+    <textarea
+      {...props}
+      className="p-2 border mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md"
+    />
+  );
 }

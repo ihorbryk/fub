@@ -1,4 +1,7 @@
-export class Entity {
+import { Input, TextArea } from "../ui/Form";
+
+// TODO: rename file to Model.js
+export class Model {
   constructor() {
     // Entity name displayed on the page header
     this.name = "";
@@ -42,10 +45,27 @@ export class Entity {
 
 const entities = [];
 
-export const registerEntity = (entityClass) => {
+export const registerModel = (entityClass) => {
   entities.push(new entityClass());
 };
 
-export const getEntities = () => {
+export const getModels = () => {
   return entities;
 };
+
+export class Field {}
+export class CharField extends Field {
+  constructor(label) {
+    super();
+    this.label = label;
+  }
+  render = (props) => <Input {...props} />;
+}
+
+export class TextField extends Field {
+  constructor(label) {
+    super();
+    this.label = label;
+  }
+  render = (props) => <TextArea {...props} />;
+}

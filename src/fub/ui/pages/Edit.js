@@ -1,33 +1,34 @@
 import React from "react";
 import Layout from "../Layout";
-import { getEntities } from "../../services/entity";
+import { Field, getModels } from "../../services/model";
 import { useParams } from "react-router-dom";
-import { PageHeader } from "../elements";
 import Form from "../Form";
 
 export default function Edit() {
-  const { entitySlug, id } = useParams();
-  const currentEntity = getEntities().find(
-    (entity) => entity.slug === entitySlug
-  );
-  const currentData = currentEntity.data.find(
-    (item) => item[currentEntity.primaryKey] == id
+  const { modelSlug, id } = useParams();
+
+  const currentModel = getModels().find((entity) => entity.slug === modelSlug);
+
+  const currentData = currentModel.data.find(
+    (item) => item[currentModel.primaryKey] == id
   );
 
   if (!currentData) {
     return null;
   }
 
+  const fields = Object.keys(currentModel).reduce((acc, key) => {
+    if (currentModel[key].__proto__ instanceof Field) {
+      acc[key] = currentModel[key];
+    }
+    return acc;
+  }, {});
+
   return (
-    <Layout>
-      <PageHeader
-        title={`Editing ${currentEntity.name} #${
-          currentData[currentEntity.primaryKey]
-        }`}
-      />
+    <Layout title={`Editing ${currentModel.name}`}>
       <div className="">
         <Form
-          initValues={Object.keys(currentData).reduce((acc, key) => {
+          initValues={Object.keys(fields).reduce((acc, key) => {
             acc[key] = currentData[key];
             return acc;
           }, {})}
@@ -36,25 +37,23 @@ export default function Edit() {
             // TODO: call service method for update entity
           }}
         >
-          {({ values, handleFieldUpdate, handleFormSubmit }) => (
+          {({ values, handleFieldChange, handleFormSubmit }) => (
             <form onSubmit={handleFormSubmit}>
-              {Object.keys(currentData).map((key) => (
+              {Object.keys(fields).map((key) => (
                 <div key={key} className="mb-3">
                   <label
-                    htmlFor=""
+                    htmlFor={key}
                     className="block text-sm font-medium text-gray-700"
                   >
-                    {key}
+                    {fields[key].label}
                   </label>
-                  <input
-                    name={key}
-                    type="text"
-                    value={values[key]}
-                    className="p-2 border mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md"
-                    onChange={(e) =>
-                      handleFieldUpdate(e.target.name, e.target.value)
-                    }
-                  />
+                  {fields[key].render({
+                    id: key,
+                    name: key,
+                    value: values[key],
+                    onChange: (e) =>
+                      handleFieldChange(e.target.name, e.target.value),
+                  })}
                 </div>
               ))}
               <div className="px-4 py-3 bg-gray-50 text-right sm:px-6">

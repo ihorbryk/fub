@@ -3,7 +3,7 @@ import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 import Home from "./ui/pages/Home";
 import List from "./ui/pages/List";
 import Edit from "./ui/pages/Edit";
-import { Entity, registerEntity } from "./services/entity";
+import { CharField, Model, registerModel, TextField } from "./services/model";
 
 const posts = [
   { id: 1, title: "title 1", body: "body 1" },
@@ -11,16 +11,18 @@ const posts = [
   { id: 3, title: "title 3", body: "body 3" },
 ];
 
-class Post extends Entity {
+class PostModel extends Model {
   constructor() {
     super();
-    this.name = "Записи нашего блога";
+    this.name = "Post";
     this.slug = "posts";
     this.data = posts; // TODO: need dataprovider
     this.listFields = ["id", "body"];
-    this.listFieldNames = { id: "ID", body: "Тело" };
     this.primaryKey = "id";
   }
+
+  title = new CharField("Title");
+  body = new TextField("Тело");
 }
 
 const authors = [
@@ -29,26 +31,30 @@ const authors = [
   { id: 3, name: "Valera", secondName: "Fedorov" },
 ];
 
-class Author extends Entity {
+class AuthorModel extends Model {
   constructor() {
     super();
     this.name = "Автор";
     this.slug = "author";
     this.data = authors;
   }
+
+  // TODO: this field override this.name declared in constructor
+  name = new CharField("Имя");
+  secondName = new CharField("Фамилия");
 }
 
-registerEntity(Post);
-registerEntity(Author);
+registerModel(PostModel);
+registerModel(AuthorModel);
 
 export default function Fub(props) {
   return (
     <Router>
       <Switch>
-        <Route exact path="/:entitySlug/:id">
+        <Route exact path="/:modelSlug/:id">
           <Edit />
         </Route>
-        <Route exact path="/:entitySlug">
+        <Route exact path="/:modelSlug">
           <List />
         </Route>
         <Route exact path="/">
