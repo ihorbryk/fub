@@ -1,6 +1,6 @@
 import React from "react";
 import Layout from "../Layout";
-import { Field, getModels } from "../../services/model";
+import { Field, getModels } from "../../model";
 import { useParams } from "react-router-dom";
 import Form from "../Form";
 

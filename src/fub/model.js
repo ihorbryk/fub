@@ -1,6 +1,5 @@
-import { Input, TextArea } from "../ui/Form";
+import { Input, TextArea } from "./ui/Form";
 
-// TODO: rename file to Model.js
 export class Model {
   constructor() {
     // Entity name displayed on the page header

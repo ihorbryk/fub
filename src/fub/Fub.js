@@ -3,7 +3,7 @@ import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 import Home from "./ui/pages/Home";
 import List from "./ui/pages/List";
 import Edit from "./ui/pages/Edit";
-import { CharField, Model, registerModel, TextField } from "./services/model";
+import { CharField, Model, registerModel, TextField } from "./model";
 
 const posts = [
   { id: 1, title: "title 1", body: "body 1" },

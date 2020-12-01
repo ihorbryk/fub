@@ -1,6 +1,6 @@
 import React from "react";
 import Layout from "../Layout";
-import { getModels } from "../../services/model";
+import { getModels } from "../../model";
 import { Link, useParams } from "react-router-dom";
 
 export default function List() {

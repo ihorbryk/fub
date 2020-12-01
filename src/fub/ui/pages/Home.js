@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import Layout from "../Layout";
-import { getModels } from "../../services/model";
+import { getModels } from "../../model";
 
 export default function Home(props) {
   const models = getModels();
