@@ -40,20 +40,24 @@ export default function Edit() {
           {({ values, handleFieldChange, handleFormSubmit }) => (
             <form onSubmit={handleFormSubmit}>
               {Object.keys(fields).map((key) => (
-                <div key={key} className="mb-3">
-                  <label
-                    htmlFor={key}
-                    className="block text-sm font-medium text-gray-700"
-                  >
-                    {fields[key].label}
-                  </label>
-                  {fields[key].render({
-                    id: key,
-                    name: key,
-                    value: values[key],
-                    onChange: (e) =>
-                      handleFieldChange(e.target.name, e.target.value),
-                  })}
+                <div key={key} className="mb-3 flex items-center">
+                  <div className="w-48">
+                    <label
+                      htmlFor={key}
+                      className="block text-sm font-medium text-gray-700"
+                    >
+                      {fields[key].label}
+                    </label>
+                  </div>
+                  <div className="w-full">
+                    {fields[key].render({
+                      id: key,
+                      name: key,
+                      value: values[key],
+                      onChange: (e) =>
+                        handleFieldChange(e.target.name, e.target.value),
+                    })}
+                  </div>
                 </div>
               ))}
               <div className="px-4 py-3 bg-gray-50 text-right sm:px-6">

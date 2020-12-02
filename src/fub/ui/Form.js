@@ -41,3 +41,19 @@ export function TextArea(props) {
     />
   );
 }
+
+export function Checkbox(props) {
+  return (
+    <input
+      {...props}
+      onChange={() =>
+        props.onChange({
+          target: { name: props.name, value: !props.value },
+        })
+      }
+      checked={props.value}
+      type="checkbox"
+      className="focus:ring-indigo-500 h-4 w-4 text-indigo-600 border-gray-300 rounded"
+    />
+  );
+}

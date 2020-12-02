@@ -1,4 +1,4 @@
-import { Input, TextArea } from "./ui/Form";
+import { Checkbox, Input, TextArea } from "./ui/Form";
 
 export class Model {
   constructor() {
@@ -67,4 +67,12 @@ export class TextField extends Field {
     this.label = label;
   }
   render = (props) => <TextArea {...props} />;
+}
+
+export class BooleanField extends Field {
+  constructor(label) {
+    super();
+    this.label = label;
+  }
+  render = (props) => <Checkbox {...props} />;
 }
