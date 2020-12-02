@@ -4,6 +4,7 @@ import Home from "./ui/pages/Home";
 import List from "./ui/pages/List";
 import Edit from "./ui/pages/Edit";
 import {
+  ChoiceField,
   BooleanField,
   CharField,
   Model,
@@ -12,9 +13,9 @@ import {
 } from "./model";
 
 const posts = [
-  { id: 1, title: "title 1", body: "body 1", published: true },
-  { id: 2, title: "title 2", body: "body 2", published: false },
-  { id: 3, title: "title 3", body: "body 3", published: true },
+  { id: 1, title: "title 1", body: "body 1", published: true, animal: "cat" },
+  { id: 2, title: "title 2", body: "body 2", published: false, animal: "dog" },
+  { id: 3, title: "title 3", body: "body 3", published: true, animal: "pig" },
 ];
 
 class PostModel extends Model {
@@ -29,7 +30,16 @@ class PostModel extends Model {
 
   title = new CharField("Title");
   body = new TextField("Тело");
-  published = new BooleanField("Published");
+  published = new BooleanField("Опубликовано");
+  animal = new ChoiceField(
+    "Животное",
+    [
+      ["dog", "Сабака"],
+      ["cat", "Кот"],
+      ["pig", "Свинья"],
+    ],
+    true
+  );
 }
 
 const authors = [

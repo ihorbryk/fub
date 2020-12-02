@@ -12,14 +12,17 @@ export default function List() {
 
   return (
     <Layout title={`Select ${currentEntity.name} for edit`}>
-      <div>
-        <table className="table-auto border border-collapse w-full">
+      <div className="shadow overflow-hidden border-b border-gray-200 sm:rounded-lg">
+        <table className="table-auto min-w-full">
           <thead>
             <tr>
               {Object.keys(currentEntity.data[0]).map((key, index) => {
                 if (currentEntity.getListFields().includes(key)) {
                   return (
-                    <th key={key} className="border p-2">
+                    <th
+                      key={key}
+                      className="px-6 py-3 bg-gray-50 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                    >
                       {listFieldNames[key]}
                     </th>
                   );
@@ -27,13 +30,16 @@ export default function List() {
               })}
             </tr>
           </thead>
-          <tbody>
+          <tbody className="bg-white divide-y divide-gray-200">
             {currentEntity.data.map((dataItem, rowIndex) => (
               <tr key={rowIndex}>
                 {Object.keys(dataItem).map((key, columnIndex) => {
                   if (currentEntity.getListFields().includes(key)) {
                     return (
-                      <td key={dataItem[key]} className="border p-2">
+                      <td
+                        key={dataItem[key]}
+                        className="px-6 py-4 whitespace-nowrap"
+                      >
                         {columnIndex === 0 ? (
                           <Link
                             to={`/${currentEntity.slug}/${
