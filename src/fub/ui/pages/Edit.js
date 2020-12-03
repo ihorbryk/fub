@@ -1,31 +1,33 @@
 import React from "react";
 import Layout from "../Layout";
-import { Field, getModels } from "../../model";
+import { Field, getLayouts } from "../../model";
 import { useParams } from "react-router-dom";
 import Form from "../Form";
 
 export default function Edit() {
-  const { modelSlug, id } = useParams();
+  const { layoutSlug, id } = useParams();
 
-  const currentModel = getModels().find((entity) => entity.slug === modelSlug);
+  const currentLayout = getLayouts().find(
+    (layout) => layout.slug === layoutSlug
+  );
 
-  const currentData = currentModel.data.find(
-    (item) => item[currentModel.primaryKey] == id
+  const currentData = currentLayout.data.find(
+    (item) => item[currentLayout.primaryKey] == id
   );
 
   if (!currentData) {
-    return null;
+    return <div>No data</div>;
   }
 
-  const fields = Object.keys(currentModel).reduce((acc, key) => {
-    if (currentModel[key].__proto__ instanceof Field) {
-      acc[key] = currentModel[key];
+  const fields = Object.keys(currentLayout.model).reduce((acc, key) => {
+    if (currentLayout.model[key].__proto__ instanceof Field) {
+      acc[key] = currentLayout.model[key];
     }
     return acc;
   }, {});
 
   return (
-    <Layout title={`Editing ${currentModel.name}`}>
+    <Layout title={`Editing ${currentLayout.name}`}>
       <div className="">
         <Form
           initValues={Object.keys(fields).reduce((acc, key) => {

@@ -1,25 +1,26 @@
 import { Checkbox, Input, TextArea, RadioList, SelectList } from "./ui/Form";
 
-export class Model {
-  constructor() {
-    // Entity name displayed on the page header
-    this.name = "";
+export class Layout {
+  // Entity name displayed on the page header
+  name = "";
 
-    // Field used as entity slug in routes
-    this.slug = "";
+  // Field used as entity slug in routes
+  slug = "";
 
-    // Array of entity objects
-    this.data = [];
+  // Array of model objects
+  data = [];
 
-    // Keys of fields displayed on list page
-    this.listFields = [];
+  // Object discribe structure of entity
+  model = null;
 
-    // Names of fields displayed on list page
-    this.listFieldNames = [];
+  // Keys of fields displayed on list page
+  listFields = [];
 
-    // Field used as uniq identificator
-    this.primaryKey = "id";
-  }
+  // Names of fields displayed on list page
+  listFieldNames = [];
+
+  // Field used as uniq identificator in data set
+  primaryKey = "id";
 
   getListFields() {
     if (this.data.length === 0) {
@@ -42,14 +43,31 @@ export class Model {
   }
 }
 
-const entities = [];
+export class Model {
+  // Entity name displayed on the page header
+  name = "";
 
-export const registerModel = (entityClass) => {
-  entities.push(new entityClass());
+  // Field used as entity slug in routes
+  slug = "";
+
+  // Keys of fields displayed on list page
+  listFields = [];
+
+  // Names of fields displayed on list page
+  listFieldNames = [];
+
+  // Field used as uniq identificator
+  primaryKey = "id";
+}
+
+const layouts = [];
+
+export const registerLayout = (layoutClass) => {
+  layouts.push(new layoutClass());
 };
 
-export const getModels = () => {
-  return entities;
+export const getLayouts = () => {
+  return layouts;
 };
 
 export class Field {

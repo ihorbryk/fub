@@ -8,8 +8,9 @@ import {
   BooleanField,
   CharField,
   Model,
-  registerModel,
+  registerLayout,
   TextField,
+  Layout,
 } from "./model";
 
 const posts = [
@@ -19,15 +20,6 @@ const posts = [
 ];
 
 class PostModel extends Model {
-  constructor() {
-    super();
-    this.name = "Post";
-    this.slug = "posts";
-    this.data = posts; // TODO: need dataprovider
-    this.listFields = ["id", "body"];
-    this.primaryKey = "id";
-  }
-
   title = new CharField("Title");
   body = new TextField("Тело");
   published = new BooleanField("Опубликовано");
@@ -42,6 +34,18 @@ class PostModel extends Model {
   );
 }
 
+class PostLayout extends Layout {
+  constructor() {
+    super();
+    this.name = "Post";
+    this.slug = "posts";
+    this.data = posts; // TODO: need dataprovider
+    this.model = new PostModel();
+    this.listFields = ["id", "body"];
+    this.primaryKey = "id";
+  }
+}
+
 const authors = [
   { id: 1, name: "Anton", secondName: "Gavrilov" },
   { id: 2, name: "Petr", secondName: "Zaharov" },
@@ -49,29 +53,30 @@ const authors = [
 ];
 
 class AuthorModel extends Model {
+  name = new CharField("Имя");
+  secondName = new CharField("Фамилия");
+}
+class AuthorLayout extends Layout {
   constructor() {
     super();
     this.name = "Автор";
     this.slug = "author";
     this.data = authors;
+    this.model = new AuthorModel();
   }
-
-  // TODO: this field override this.name declared in constructor
-  name = new CharField("Имя");
-  secondName = new CharField("Фамилия");
 }
 
-registerModel(PostModel);
-registerModel(AuthorModel);
+registerLayout(PostLayout);
+registerLayout(AuthorLayout);
 
 export default function Fub(props) {
   return (
     <Router>
       <Switch>
-        <Route exact path="/:modelSlug/:id">
+        <Route exact path="/:layoutSlug/:id">
           <Edit />
         </Route>
-        <Route exact path="/:modelSlug">
+        <Route exact path="/:layoutSlug">
           <List />
         </Route>
         <Route exact path="/">

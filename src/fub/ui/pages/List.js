@@ -1,23 +1,23 @@
 import React from "react";
 import Layout from "../Layout";
-import { getModels } from "../../model";
+import { getLayouts } from "../../model";
 import { Link, useParams } from "react-router-dom";
 
 export default function List() {
-  const models = getModels();
-  const { modelSlug } = useParams();
+  const layouts = getLayouts();
+  const { layoutSlug } = useParams();
 
-  const currentEntity = models.find((model) => model.slug === modelSlug);
-  const listFieldNames = currentEntity.getListFieldNames();
+  const currentLayout = layouts.find((layout) => layout.slug === layoutSlug);
+  const listFieldNames = currentLayout.getListFieldNames();
 
   return (
-    <Layout title={`Select ${currentEntity.name} for edit`}>
+    <Layout title={`Select ${currentLayout.name} for edit`}>
       <div className="shadow overflow-hidden border-b border-gray-200 sm:rounded-lg">
         <table className="table-auto min-w-full">
           <thead>
             <tr>
-              {Object.keys(currentEntity.data[0]).map((key, index) => {
-                if (currentEntity.getListFields().includes(key)) {
+              {Object.keys(currentLayout.data[0]).map((key, index) => {
+                if (currentLayout.getListFields().includes(key)) {
                   return (
                     <th
                       key={key}
@@ -31,10 +31,10 @@ export default function List() {
             </tr>
           </thead>
           <tbody className="bg-white divide-y divide-gray-200">
-            {currentEntity.data.map((dataItem, rowIndex) => (
+            {currentLayout.data.map((dataItem, rowIndex) => (
               <tr key={rowIndex}>
                 {Object.keys(dataItem).map((key, columnIndex) => {
-                  if (currentEntity.getListFields().includes(key)) {
+                  if (currentLayout.getListFields().includes(key)) {
                     return (
                       <td
                         key={dataItem[key]}
@@ -42,8 +42,8 @@ export default function List() {
                       >
                         {columnIndex === 0 ? (
                           <Link
-                            to={`/${currentEntity.slug}/${
-                              dataItem[currentEntity.primaryKey]
+                            to={`/${currentLayout.slug}/${
+                              dataItem[currentLayout.primaryKey]
                             }`}
                             className="text-blue-500"
                           >

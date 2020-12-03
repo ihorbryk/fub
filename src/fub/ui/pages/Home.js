@@ -1,18 +1,18 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import Layout from "../Layout";
-import { getModels } from "../../model";
+import { getLayouts } from "../../model";
 
 export default function Home(props) {
-  const models = getModels();
+  const layouts = getLayouts();
 
   return (
     <Layout>
       <div>
         <ul>
-          {models.map((model) => (
-            <li key={model.slug}>
-              <Link to={`/${model.slug}`}>{model.name}</Link>
+          {layouts.map((layout) => (
+            <li key={layout.slug}>
+              <Link to={`/${layout.slug}`}>{layout.name}</Link>
             </li>
           ))}
         </ul>
