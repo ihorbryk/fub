@@ -12,7 +12,12 @@ export default function Home(props) {
         <ul>
           {layouts.map((layout) => (
             <li key={layout.slug}>
-              <Link to={`/${layout.slug}`}>{layout.name}</Link>
+              <Link
+                className="text-blue-500 hover:text-blue-400"
+                to={`/${layout.slug}`}
+              >
+                {layout.name}
+              </Link>
             </li>
           ))}
         </ul>
