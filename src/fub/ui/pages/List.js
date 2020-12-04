@@ -3,12 +3,18 @@ import Layout from "../Layout";
 import { getLayouts } from "../../model";
 import { Link, useParams } from "react-router-dom";
 
-export default function List() {
+export default function List(props) {
   const layouts = getLayouts();
   const { layoutSlug } = useParams();
 
   const currentLayout = layouts.find((layout) => layout.slug === layoutSlug);
   const listFieldNames = currentLayout.getListFieldNames();
+
+  const handleDeleteOne = (uniqFieldValue) => {
+    if (props.onDeleteOne) {
+      props.onDeleteOne(uniqFieldValue);
+    }
+  };
 
   return (
     <Layout title={`Select ${currentLayout.name} for edit`}>
@@ -60,7 +66,12 @@ export default function List() {
                   }
                 })}
                 <td className="px-6 py-4 text-right text-sm">
-                  <div className="inline-block text-red-400 cursor-pointer hover:underline">
+                  <div
+                    className="inline-block text-red-400 cursor-pointer hover:underline"
+                    onClick={() =>
+                      handleDeleteOne(dataItem[currentLayout.primaryKey])
+                    }
+                  >
                     Delete
                   </div>
                 </td>
