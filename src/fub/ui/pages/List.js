@@ -52,7 +52,7 @@ export default function List(props) {
                             to={`/${currentLayout.slug}/${
                               dataItem[currentLayout.primaryKey]
                             }`}
-                            className="text-blue-500"
+                            className="text-blue-500 hover:text-blue-400"
                           >
                             {dataItem[key]}
                           </Link>
