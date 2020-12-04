@@ -1,22 +1,24 @@
 import React from "react";
-import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
-import Home from "./ui/pages/Home";
-import List from "./ui/pages/List";
-import Edit from "./ui/pages/Edit";
+import { BrowserRouter as Router, Switch } from "react-router-dom";
+import App from "./classes/App";
 
-export default function Fub() {
+export default function Fub(props) {
+  const getAppInstance = () => {
+    if (props.customAppClass) {
+      return new props.customAppClass();
+    }
+
+    return new App();
+  };
+
+  const appInstance = getAppInstance();
+
   return (
     <Router>
       <Switch>
-        <Route exact path="/:layoutSlug/:id">
-          <Edit />
-        </Route>
-        <Route exact path="/:layoutSlug">
-          <List />
-        </Route>
-        <Route exact path="/">
-          <Home />
-        </Route>
+        {appInstance.edit()}
+        {appInstance.list()}
+        {appInstance.home()}
       </Switch>
     </Router>
   );
