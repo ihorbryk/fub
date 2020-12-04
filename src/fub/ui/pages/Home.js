@@ -7,7 +7,7 @@ export default function Home(props) {
   const layouts = getLayouts();
 
   return (
-    <Layout>
+    <Layout title="Home">
       <div>
         <ul>
           {layouts.map((layout) => (
