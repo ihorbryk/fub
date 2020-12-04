@@ -1,10 +1,10 @@
-import Model from "../fub/classes/model";
+import Model from "../fub/classes/Model";
 import {
   CharField,
   TextField,
   BooleanField,
   ChoiceField,
-} from "../fub/classes/modelField";
+} from "../fub/classes/ModelField";
 
 export default class PostModel extends Model {
   title = new CharField("Title");

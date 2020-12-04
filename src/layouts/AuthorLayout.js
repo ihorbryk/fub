@@ -1,4 +1,4 @@
-import Layout from "../fub/classes/layout";
+import Layout from "../fub/classes/Layout";
 import AuthorModel from "../models/AuthorModel";
 import { authors } from "../services/author";
 
