@@ -1,17 +1,17 @@
 import React from "react";
-import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
+import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import Home from "./ui/pages/Home";
 import List from "./ui/pages/List";
 import Edit from "./ui/pages/Edit";
+import { Model } from "./classes/model";
+import { registerLayout } from "./services/layout";
 import {
+  TextField,
   ChoiceField,
   BooleanField,
   CharField,
-  Model,
-  registerLayout,
-  TextField,
-  Layout,
-} from "./model";
+} from "./classes/modelField";
+import { Layout } from "./classes/layout";
 
 const posts = [
   { id: 1, title: "title 1", body: "body 1", published: true, animal: "cat" },

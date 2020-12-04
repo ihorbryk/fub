@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import Layout from "../Layout";
-import { getLayouts } from "../../model";
+import { getLayouts } from "../../services/layout";
 
 export default function Home(props) {
   const layouts = getLayouts();

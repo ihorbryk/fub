@@ -1,7 +1,8 @@
 import React from "react";
-import Layout from "../Layout";
-import { Field, getLayouts } from "../../model";
 import { useParams } from "react-router-dom";
+import { ModelField } from "../../classes/modelField";
+import { getLayouts } from "../../services/layout";
+import Layout from "../Layout";
 import Form from "../Form";
 
 export default function Edit() {
@@ -20,7 +21,7 @@ export default function Edit() {
   }
 
   const fields = Object.keys(currentLayout.model).reduce((acc, key) => {
-    if (currentLayout.model[key].__proto__ instanceof Field) {
+    if (currentLayout.model[key].__proto__ instanceof ModelField) {
       acc[key] = currentLayout.model[key];
     }
     return acc;

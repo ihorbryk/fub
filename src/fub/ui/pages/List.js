@@ -1,7 +1,7 @@
 import React from "react";
-import Layout from "../Layout";
-import { getLayouts } from "../../model";
 import { Link, useParams } from "react-router-dom";
+import { getLayouts } from "../../services/layout";
+import Layout from "../Layout";
 
 export default function List(props) {
   const layouts = getLayouts();
