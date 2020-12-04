@@ -1,4 +1,4 @@
-export class Model {
+export default class Model {
   // Entity name displayed on the page header
   name = "";
 

@@ -1,4 +1,4 @@
-export class Layout {
+export default class Layout {
   // Entity name displayed on the page header
   name = "";
 
