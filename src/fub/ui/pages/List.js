@@ -28,6 +28,7 @@ export default function List() {
                   );
                 } else return null;
               })}
+              <th className="px-6 py-3 bg-gray-50 text-left text-xs font-medium text-gray-500 uppercase tracking-wider" />
             </tr>
           </thead>
           <tbody className="bg-white divide-y divide-gray-200">
@@ -58,6 +59,11 @@ export default function List() {
                     return null;
                   }
                 })}
+                <td className="px-6 py-4 text-right text-sm">
+                  <div className="inline-block text-red-400 cursor-pointer hover:underline">
+                    Delete
+                  </div>
+                </td>
               </tr>
             ))}
           </tbody>
