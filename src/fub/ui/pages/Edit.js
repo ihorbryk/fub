@@ -41,7 +41,7 @@ export default function Edit() {
           }}
         >
           {({ values, handleFieldChange, handleFormSubmit }) => (
-            <div className="shadow overflow-hidden border-b border-gray-200 sm:rounded-lg">
+            <div className="shadow overflow-hidden border-b border-gray-200 sm:rounded-lg bg-white">
               <form onSubmit={handleFormSubmit} className="p-3">
                 {Object.keys(fields).map((key) => (
                   <div key={key} className="flex items-center py-3 border-b">
