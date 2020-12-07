@@ -6,20 +6,12 @@ import Layout from "../Layout";
 import Form from "../Form";
 import { url } from "../../tool/route";
 
-export default function Edit(props) {
-  const { layoutSlug, id } = useParams();
+export default function Add(props) {
+  const { layoutSlug } = useParams();
 
-  const currentLayout = getLayouts().find((layout) => {
-    return layout.slug === layoutSlug;
-  });
-
-  const currentData = currentLayout.data.find(
-    (item) => item[currentLayout.primaryKey] == id
+  const currentLayout = getLayouts().find(
+    (layout) => layout.slug === layoutSlug
   );
-
-  if (!currentData) {
-    return <div>No data</div>;
-  }
 
   const fields = Object.keys(currentLayout.model).reduce((acc, key) => {
     if (currentLayout.model[key].__proto__ instanceof ModelField) {
@@ -29,11 +21,11 @@ export default function Edit(props) {
   }, {});
 
   return (
-    <Layout title={`Editing ${currentLayout.name}`}>
+    <Layout title={`Add new ${currentLayout.name}`}>
       <div className="">
         <Form
           initValues={Object.keys(fields).reduce((acc, key) => {
-            acc[key] = currentData[key];
+            acc[key] = "";
             return acc;
           }, {})}
           onSubmit={(values) => {

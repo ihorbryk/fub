@@ -1,6 +1,7 @@
 import React from "react";
 import { Link, useParams } from "react-router-dom";
 import { getLayouts } from "../../services/layout";
+import { url } from "../../tool/route";
 import Layout from "../Layout";
 
 export default function List(props) {
@@ -17,7 +18,19 @@ export default function List(props) {
   };
 
   return (
-    <Layout title={`Select ${currentLayout.name} for edit`}>
+    <Layout
+      title={`Select ${currentLayout.name} for edit`}
+      headerActions={
+        <div>
+          <Link
+            to={url(props.paths.add, [currentLayout.slug])}
+            className="inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md bg-white hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+          >
+            Add new
+          </Link>
+        </div>
+      }
+    >
       <div className="shadow overflow-hidden border-b border-gray-200 sm:rounded-lg">
         <table className="table-auto min-w-full">
           <thead>

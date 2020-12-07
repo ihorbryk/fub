@@ -16,6 +16,7 @@ export default function Fub(props) {
   return (
     <Router>
       <Switch>
+        {appInstance.add()}
         {appInstance.edit()}
         {appInstance.list()}
         {appInstance.home()}
