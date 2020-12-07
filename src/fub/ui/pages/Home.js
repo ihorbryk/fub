@@ -8,10 +8,10 @@ export default function Home(props) {
 
   return (
     <Layout title="Home">
-      <div>
-        <ul>
+      <div className="shadow overflow-hidden border-b border-gray-200 sm:rounded-lg">
+        <ul className="bg-white divide-y">
           {layouts.map((layout) => (
-            <li key={layout.slug}>
+            <li key={layout.slug} className="px-6 py-4">
               <Link
                 className="text-blue-500 hover:text-blue-400"
                 to={`/${layout.slug}`}
