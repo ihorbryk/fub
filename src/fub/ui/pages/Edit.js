@@ -1,5 +1,6 @@
 import React from "react";
 import { Link, useParams } from "react-router-dom";
+import FeatherIcon from "feather-icons-react";
 import { ModelField } from "../../classes/ModelField";
 import { getLayouts } from "../../services/layout";
 import Layout from "../Layout";
@@ -29,7 +30,14 @@ export default function Edit(props) {
   }, {});
 
   return (
-    <Layout title={`Editing ${currentLayout.name}`}>
+    <Layout
+      title={`Editing ${currentLayout.name}`}
+      breadCrumbs={[
+        ["/", <FeatherIcon icon="home" size="16" />],
+        [url(props.paths.list, [currentLayout.slug]), currentLayout.name],
+        ["", "Edit"],
+      ]}
+    >
       <div className="">
         <Form
           initValues={Object.keys(fields).reduce((acc, key) => {

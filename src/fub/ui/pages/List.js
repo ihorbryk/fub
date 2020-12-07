@@ -1,5 +1,6 @@
 import React from "react";
 import { Link, useParams } from "react-router-dom";
+import FeatherIcon from "feather-icons-react";
 import { getLayouts } from "../../services/layout";
 import { url } from "../../tool/route";
 import Layout from "../Layout";
@@ -30,6 +31,10 @@ export default function List(props) {
           </Link>
         </div>
       }
+      breadCrumbs={[
+        ["/", <FeatherIcon icon="home" size="16" />],
+        ["", currentLayout.name],
+      ]}
     >
       <div className="shadow overflow-hidden border-b border-gray-200 sm:rounded-lg">
         <table className="table-auto min-w-full">

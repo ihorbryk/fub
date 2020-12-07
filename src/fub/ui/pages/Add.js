@@ -1,5 +1,6 @@
 import React from "react";
 import { Link, useParams } from "react-router-dom";
+import FeatherIcon from "feather-icons-react";
 import { ModelField } from "../../classes/ModelField";
 import { getLayouts } from "../../services/layout";
 import Layout from "../Layout";
@@ -21,7 +22,14 @@ export default function Add(props) {
   }, {});
 
   return (
-    <Layout title={`Add new ${currentLayout.name}`}>
+    <Layout
+      title={`Add new ${currentLayout.name}`}
+      breadCrumbs={[
+        ["/", <FeatherIcon icon="home" size="16" />],
+        [url(props.paths.list, [currentLayout.slug]), currentLayout.name],
+        ["", "Add new"],
+      ]}
+    >
       <div className="">
         <Form
           initValues={Object.keys(fields).reduce((acc, key) => {
