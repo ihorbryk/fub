@@ -13,7 +13,11 @@ export default function Layout(props) {
           </Link>
         );
       }
-      return <div className="">{item[1]}</div>;
+      return (
+        <div key={item[1]} className="">
+          {item[1]}
+        </div>
+      );
     });
 
     return breadCrumbs.reduce((prev, curr, index) => [
