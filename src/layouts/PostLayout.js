@@ -1,4 +1,4 @@
-import Layout from "../fub/classes/Layout";
+import Layout from "../fub/classes/layout";
 import { posts } from "../services/post";
 import PostModel from "../models/PostModel";
 

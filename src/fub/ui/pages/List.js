@@ -4,8 +4,6 @@ import FeatherIcon from "feather-icons-react";
 import { getLayouts } from "../../services/layout";
 import { url } from "../../tool/route";
 import Layout from "../Layout";
-import { AppContext } from "../../Fub";
-import { LayoutContext } from "../../classes/App";
 
 export default function List(props) {
   const layouts = getLayouts();
