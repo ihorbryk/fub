@@ -4,6 +4,7 @@ import FeatherIcon from "feather-icons-react";
 import { getLayouts } from "../../services/layout";
 import { url } from "../../tool/route";
 import Layout from "../Layout";
+import NoDataForDisplay from "../pages/NoDataForDisplay";
 
 export default function List(props) {
   const layouts = getLayouts();
@@ -11,6 +12,10 @@ export default function List(props) {
 
   const currentLayout = layouts.find((layout) => layout.slug === layoutSlug);
   const listFieldNames = currentLayout.getListFieldNames();
+
+  if (currentLayout.data.length === 0) {
+    return <NoDataForDisplay />;
+  }
 
   return (
     <Layout
