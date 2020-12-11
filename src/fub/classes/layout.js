@@ -20,6 +20,9 @@ export default class Layout {
   // Field used as uniq identificator in data set
   primaryKey = "id";
 
+  // Choise display pagination or not
+  displayPagination = true;
+
   getListFields() {
     if (this.data.length === 0) {
       return [];
@@ -38,5 +41,25 @@ export default class Layout {
       }, {});
     }
     return this.listFieldNames;
+  }
+
+  handleDeleteOne(uniqFieldValue) {
+    console.log(uniqFieldValue);
+  }
+
+  handleClickPaginationNext() {
+    console.info(
+      "Define handleClickPaginationNext method in your layout for handle pagination next"
+    );
+  }
+
+  handleClickPaginationPrev() {
+    console.info(
+      "Define handleClickPaginationPrev method in your layout for handle pagination prev"
+    );
+  }
+
+  getPaginationText() {
+    return "";
   }
 }

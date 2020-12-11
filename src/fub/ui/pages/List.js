@@ -4,6 +4,8 @@ import FeatherIcon from "feather-icons-react";
 import { getLayouts } from "../../services/layout";
 import { url } from "../../tool/route";
 import Layout from "../Layout";
+import { AppContext } from "../../Fub";
+import { LayoutContext } from "../../classes/App";
 
 export default function List(props) {
   const layouts = getLayouts();
@@ -11,12 +13,6 @@ export default function List(props) {
 
   const currentLayout = layouts.find((layout) => layout.slug === layoutSlug);
   const listFieldNames = currentLayout.getListFieldNames();
-
-  const handleDeleteOne = (uniqFieldValue) => {
-    if (props.onDeleteOne) {
-      props.onDeleteOne(uniqFieldValue);
-    }
-  };
 
   return (
     <Layout
@@ -36,7 +32,7 @@ export default function List(props) {
         ["", currentLayout.name],
       ]}
     >
-      <div className="shadow overflow-hidden border-b border-gray-200 sm:rounded-lg">
+      <div className="shadow overflow-hidden border-gray-200 sm:rounded-lg">
         <table className="table-auto min-w-full">
           <thead>
             <tr>
@@ -87,7 +83,9 @@ export default function List(props) {
                   <div
                     className="inline-block text-red-400 cursor-pointer hover:underline"
                     onClick={() =>
-                      handleDeleteOne(dataItem[currentLayout.primaryKey])
+                      currentLayout.handleDeleteOne(
+                        dataItem[currentLayout.primaryKey]
+                      )
                     }
                   >
                     Delete
@@ -97,70 +95,33 @@ export default function List(props) {
             ))}
           </tbody>
         </table>
-        <div className="bg-white px-6 py-4 text-right border-t flex justify-between items-center">
+      </div>
+      {currentLayout.displayPagination && (
+        <div className="py-4 text-right flex justify-between items-center">
           <div className="text-gray-500 text-sm">
-            Showing 1 to 10 of 97 results
+            {currentLayout.getPaginationText()}
           </div>
           <nav
             className="relative z-0 inline-flex shadow-sm -space-x-px"
             aria-label="Pagination"
           >
-            <Link
-              to="#"
-              class="relative inline-flex items-center px-2 py-2 rounded-l-md border border-gray-300 bg-white text-sm font-medium text-gray-500 hover:bg-gray-50"
+            <div
+              onClick={() => currentLayout.handleClickPaginationPrev()}
+              className="cursor-pointer relative inline-flex items-center px-1 py-1 rounded-l-md border border-gray-300 bg-white text-sm font-medium text-gray-500 hover:bg-gray-50"
             >
               <span className="sr-only">Previous</span>
               <FeatherIcon icon="chevron-left" />
-            </Link>
-            <Link
-              to="#"
-              class="relative inline-flex items-center px-4 py-2 border border-gray-300 bg-white text-sm font-medium text-gray-700 hover:bg-gray-50"
-            >
-              1
-            </Link>
-            <Link
-              to="#"
-              className="relative inline-flex items-center px-4 py-2 border border-gray-300 bg-white text-sm font-medium text-gray-700 hover:bg-gray-50"
-            >
-              2
-            </Link>
-            <Link
-              to="#"
-              className="hidden md:inline-flex relative items-center px-4 py-2 border border-gray-300 bg-white text-sm font-medium text-gray-700 hover:bg-gray-50"
-            >
-              3
-            </Link>
-            <span className="relative inline-flex items-center px-4 py-2 border border-gray-300 bg-white text-sm font-medium text-gray-700">
-              ...
-            </span>
-            <Link
-              to="#"
-              className="hidden md:inline-flex relative items-center px-4 py-2 border border-gray-300 bg-white text-sm font-medium text-gray-700 hover:bg-gray-50"
-            >
-              8
-            </Link>
-            <Link
-              to="#"
-              className="relative inline-flex items-center px-4 py-2 border border-gray-300 bg-white text-sm font-medium text-gray-700 hover:bg-gray-50"
-            >
-              9
-            </Link>
-            <Link
-              to="#"
-              className="relative inline-flex items-center px-4 py-2 border border-gray-300 bg-white text-sm font-medium text-gray-700 hover:bg-gray-50"
-            >
-              10
-            </Link>
-            <Link
-              to="#"
-              class="relative inline-flex items-center px-2 py-2 rounded-r-md border border-gray-300 bg-white text-sm font-medium text-gray-500 hover:bg-gray-50"
+            </div>
+            <div
+              onClick={() => currentLayout.handleClickPaginationNext()}
+              className="cursor-pointer relative inline-flex items-center px-1 py-1 rounded-r-md border border-gray-300 bg-white text-sm font-medium text-gray-500 hover:bg-gray-50"
             >
               <span className="sr-only">Next</span>
               <FeatherIcon icon="chevron-right" />
-            </Link>
+            </div>
           </nav>
         </div>
-      </div>
+      )}
     </Layout>
   );
 }
