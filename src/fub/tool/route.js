@@ -1,5 +1,4 @@
 export function url(path, pathParams, queryParams) {
-  console.log(path, pathParams, queryParams);
   const urlParts = path.split("/");
 
   const newUrlParts = urlParts.map((element) => {
