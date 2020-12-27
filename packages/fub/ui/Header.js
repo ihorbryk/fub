@@ -1,7 +1,9 @@
-import React from "react";
+import React, { useContext } from "react";
 import { Link } from "react-router-dom";
+import { AppContext } from "../Fub";
 
 export default function Header() {
+  const appContext = useContext(AppContext);
   return (
     <div className="bg-gray-800">
       <div className="container mx-auto">
@@ -9,8 +11,8 @@ export default function Header() {
           <div className="flex items-center">
             <div className="flex-shrink-0">
               <Link to="/">
-                <div className="text-white font-bold border border-white w-8 h-8 flex items-center justify-center rounded-lg">
-                  F
+                <div className="text-white font-bold text-2xl flex items-center">
+                  {appContext.appName}
                 </div>
               </Link>
             </div>

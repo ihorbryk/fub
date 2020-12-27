@@ -11,7 +11,6 @@ import {
 import Layout from "./classes/Layout";
 import Model from "./classes/Model";
 import { registerLayout, getLayouts } from "./services/layout";
-import List from "./ui/pages/List";
 
 export { Layout, Model, registerLayout };
 export { ModelField, CharField, TextField, BooleanField, ChoiceField };
@@ -29,7 +28,9 @@ export default function Fub(props) {
 
   const appInstance = getAppInstance();
 
-  const app = {};
+  const app = {
+    appName: appInstance.appName,
+  };
 
   return (
     <AppContext.Provider value={app}>
