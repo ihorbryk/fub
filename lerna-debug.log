@@ -1,0 +1,6 @@
+0 silly argv { _: [ 'clean' ], lernaVersion: '3.22.1', '$0': 'lerna' }
+1 notice cli v3.22.1
+2 verbose rootPath /Volumes/T7/Code Private/projectx/projectx
+3 error JSONError: Unexpected token } in JSON at position 509 while parsing near '...itals": "^0.2.4",  },  "scripts": {  ...' in example/package.json
+3 error     at module.exports (/Users/ihorbryk/.nvm/versions/node/v14.15.1/lib/node_modules/lerna/node_modules/parse-json/index.js:26:19)
+3 error     at parse (/Users/ihorbryk/.nvm/versions/node/v14.15.1/lib/node_modules/lerna/node_modules/load-json-file/index.js:15:9)
