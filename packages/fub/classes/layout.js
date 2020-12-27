@@ -1,3 +1,9 @@
+import React from "react";
+import { Route } from "react-router-dom";
+import Add from "./Add";
+import List from "./List";
+import Edit from "./Edit";
+
 export default class Layout {
   // Entity name displayed on the page header
   name = "";
@@ -23,6 +29,31 @@ export default class Layout {
   // Choise display pagination or not
   displayPagination = true;
 
+  // Url for add page
+  addPath = "/:layoutSlug/add";
+
+  // Url for list page
+  listPath = "/:layoutSlug";
+
+  // Url for edit page
+  editPath = "/:layoutSlug/:id";
+
+  paths = {
+    add: this.addPath,
+    list: this.listPath,
+    edit: this.editPath,
+  };
+
+  constructor() {
+    this.listObj = new List();
+    this.addObj = new Add();
+    this.editObj = new Edit();
+  }
+
+  // #######
+  // Getters
+  // #######
+
   getListFields() {
     if (this.data.length === 0) {
       return [];
@@ -43,6 +74,14 @@ export default class Layout {
     return this.listFieldNames;
   }
 
+  getPaginationText() {
+    return "";
+  }
+
+  // ########
+  // Handlers
+  // ########
+
   handleDeleteOne(uniqFieldValue) {
     console.log(uniqFieldValue);
   }
@@ -59,7 +98,36 @@ export default class Layout {
     );
   }
 
-  getPaginationText() {
-    return "";
+  // ###########
+  // CRUD routes
+  // ###########
+
+  list() {
+    return (
+      <Route exact path={this.listPath}>
+        {this.listObj.render({ paths: this.paths })}
+      </Route>
+    );
+  }
+
+  add() {
+    return (
+      <Route exact path={this.addPath}>
+        {this.addObj.render({ paths: this.paths })}
+      </Route>
+    );
+  }
+
+  edit() {
+    return (
+      <Route exact path={this.editPath}>
+        {this.editObj.render({ paths: this.paths })}
+      </Route>
+    );
+  }
+
+  // Get array of route components
+  pages() {
+    return [this.add(), this.edit(), this.list()];
   }
 }

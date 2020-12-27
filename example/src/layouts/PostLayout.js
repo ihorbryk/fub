@@ -5,7 +5,7 @@ import PostModel from "../models/PostModel";
 export default class PostLayout extends Layout {
   name = "Post";
   slug = "posts";
-  data = []; // TODO: need dataprovider
+  data = posts;
   model = new PostModel();
   listFields = ["id", "body", "published", "animal"];
 }

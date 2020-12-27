@@ -200,16 +200,16 @@
       layouts.map(function (layout) {
         registerLayout(layout);
       });
+      this.homeInstance = new Home$1();
     }
 
     var _proto = App.prototype;
 
     _proto.home = function home() {
-      var homeInstance = new Home$1();
       return /*#__PURE__*/React.createElement(reactRouterDom.Route, {
         exact: true,
         path: this.homePath
-      }, homeInstance.render());
+      }, this.homeInstance.render());
     };
 
     _proto.accessDenied = function accessDenied() {
@@ -235,11 +235,11 @@
       props.onSubmit(values);
     };
 
-    return /*#__PURE__*/React.createElement(Fragment, null, props.children({
+    return props.children({
       values: values,
       handleFieldChange: handleFieldChange,
       handleFormSubmit: handleFormSubmit
-    }));
+    });
   }
   function Input(props) {
     return /*#__PURE__*/React.createElement("input", _extends({}, props, {
@@ -550,13 +550,10 @@
     var _useParams = reactRouterDom.useParams(),
         layoutSlug = _useParams.layoutSlug;
 
-    console.log("hello world");
     var layouts = getLayouts();
-    console.log("-->", layouts);
     var currentLayout = layouts.find(function (layout) {
       return layout.slug === layoutSlug;
     });
-    console.log(currentLayout);
     var listFieldNames = currentLayout.getListFieldNames();
 
     if (currentLayout.data.length === 0) {
@@ -756,7 +753,14 @@
       this.addPath = "/:layoutSlug/add";
       this.listPath = "/:layoutSlug";
       this.editPath = "/:layoutSlug/:id";
+      this.paths = {
+        add: this.addPath,
+        list: this.listPath,
+        edit: this.editPath
+      };
       this.listObj = new List$1();
+      this.addObj = new Add$1();
+      this.editObj = new Edit$1();
     }
 
     var _proto = Layout.prototype;
@@ -784,6 +788,10 @@
       return this.listFieldNames;
     };
 
+    _proto.getPaginationText = function getPaginationText() {
+      return "";
+    };
+
     _proto.handleDeleteOne = function handleDeleteOne(uniqFieldValue) {
       console.log(uniqFieldValue);
     };
@@ -796,35 +804,35 @@
       console.info("Define handleClickPaginationPrev method in your layout for handle pagination prev");
     };
 
-    _proto.getPaginationText = function getPaginationText() {
-      return "";
-    };
-
     _proto.list = function list() {
       return /*#__PURE__*/React.createElement(reactRouterDom.Route, {
         exact: true,
         path: this.listPath
-      }, this.listObj.render());
+      }, this.listObj.render({
+        paths: this.paths
+      }));
     };
 
     _proto.add = function add() {
-      var addInstance = new Add$1();
       return /*#__PURE__*/React.createElement(reactRouterDom.Route, {
         exact: true,
         path: this.addPath
-      }, addInstance.render());
+      }, this.addObj.render({
+        paths: this.paths
+      }));
     };
 
     _proto.edit = function edit() {
-      var editInstance = new Edit$1();
       return /*#__PURE__*/React.createElement(reactRouterDom.Route, {
         exact: true,
         path: this.editPath
-      }, editInstance.render());
+      }, this.editObj.render({
+        paths: this.paths
+      }));
     };
 
     _proto.pages = function pages() {
-      return [this.add(), this.list(), this.edit()];
+      return [this.add(), this.edit(), this.list()];
     };
 
     return Layout;
@@ -850,14 +858,10 @@
 
     var appInstance = getAppInstance();
     var app = {};
-
     return /*#__PURE__*/React.createElement(AppContext.Provider, {
       value: app
     }, /*#__PURE__*/React.createElement(reactRouterDom.BrowserRouter, null, /*#__PURE__*/React.createElement(reactRouterDom.Switch, null, appInstance.home(), getLayouts().map(function (layout) {
-      return /*#__PURE__*/React.createElement(reactRouterDom.Route, {
-        exact: true,
-        path: layout.addPath
-      }, layout.render());
+      return layout.pages();
     }))));
   }
 
@@ -873,4 +877,4 @@
   exports.registerLayout = registerLayout;
 
 })));
-//# sourceMappingURL=index.umd.js.map
+//# sourceMappingURL=fub.umd.js.map

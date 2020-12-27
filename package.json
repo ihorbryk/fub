@@ -5,6 +5,6 @@
     "lerna": "^3.22.1"
   },
   "scripts": {
-    "build": "npm run clean && mkdirp build && webpack --mode=development --progress --colors --display=minimal"
+    "dev": "lerna run start --stream --parallel"
   }
 }

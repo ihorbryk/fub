@@ -7,9 +7,8 @@ import Layout from "../Layout";
 import NoDataForDisplay from "./NoDataForDisplay";
 
 export default function List(props) {
-  const layouts = getLayouts();
   const { layoutSlug } = useParams();
-
+  const layouts = getLayouts();
   const currentLayout = layouts.find((layout) => layout.slug === layoutSlug);
   const listFieldNames = currentLayout.getListFieldNames();
 

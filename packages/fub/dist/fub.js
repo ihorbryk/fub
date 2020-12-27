@@ -1,6 +1,8 @@
-import React from 'react';
-import { Link, useParams, Route, BrowserRouter, Switch } from 'react-router-dom';
-import FeatherIcon from 'feather-icons-react';
+function _interopDefault (ex) { return (ex && (typeof ex === 'object') && 'default' in ex) ? ex['default'] : ex; }
+
+var React = _interopDefault(require('react'));
+var reactRouterDom = require('react-router-dom');
+var FeatherIcon = _interopDefault(require('feather-icons-react'));
 
 function Header() {
   return /*#__PURE__*/React.createElement("div", {
@@ -13,7 +15,7 @@ function Header() {
     className: "flex items-center"
   }, /*#__PURE__*/React.createElement("div", {
     className: "flex-shrink-0"
-  }, /*#__PURE__*/React.createElement(Link, {
+  }, /*#__PURE__*/React.createElement(reactRouterDom.Link, {
     to: "/"
   }, /*#__PURE__*/React.createElement("div", {
     className: "text-white font-bold border border-white w-8 h-8 flex items-center justify-center rounded-lg"
@@ -34,7 +36,7 @@ function Layout(props) {
   var breadCrumbsBuilder = function breadCrumbsBuilder(breadCrumbsArray) {
     var breadCrumbs = breadCrumbsArray.map(function (item) {
       if (item[0].length > 0) {
-        return /*#__PURE__*/React.createElement(Link, {
+        return /*#__PURE__*/React.createElement(reactRouterDom.Link, {
           key: item[1],
           to: item[0],
           className: ""
@@ -71,45 +73,6 @@ function Layout(props) {
   }, props.children)));
 }
 
-var layouts = [];
-var registerLayout = function registerLayout(layoutClass) {
-  layouts.push(new layoutClass());
-};
-var getLayouts = function getLayouts() {
-  return layouts;
-};
-
-function Home(props) {
-  var layouts = getLayouts();
-  return /*#__PURE__*/React.createElement(Layout, {
-    title: "Home"
-  }, /*#__PURE__*/React.createElement("div", {
-    className: "shadow overflow-hidden border-b border-gray-200 sm:rounded-lg"
-  }, /*#__PURE__*/React.createElement("ul", {
-    className: "bg-white divide-y"
-  }, layouts.map(function (layout) {
-    return /*#__PURE__*/React.createElement("li", {
-      key: layout.slug,
-      className: "px-6 py-4"
-    }, /*#__PURE__*/React.createElement(Link, {
-      className: "text-blue-500 hover:text-blue-400",
-      to: "/" + layout.slug
-    }, layout.name));
-  }))));
-}
-
-var Home$1 = /*#__PURE__*/function () {
-  function Home$1() {}
-
-  var _proto = Home$1.prototype;
-
-  _proto.render = function render() {
-    return /*#__PURE__*/React.createElement(Home, null);
-  };
-
-  return Home$1;
-}();
-
 function _extends() {
   _extends = Object.assign || function (target) {
     for (var i = 1; i < arguments.length; i++) {
@@ -134,6 +97,126 @@ function _inheritsLoose(subClass, superClass) {
   subClass.__proto__ = superClass;
 }
 
+function _unsupportedIterableToArray(o, minLen) {
+  if (!o) return;
+  if (typeof o === "string") return _arrayLikeToArray(o, minLen);
+  var n = Object.prototype.toString.call(o).slice(8, -1);
+  if (n === "Object" && o.constructor) n = o.constructor.name;
+  if (n === "Map" || n === "Set") return Array.from(o);
+  if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen);
+}
+
+function _arrayLikeToArray(arr, len) {
+  if (len == null || len > arr.length) len = arr.length;
+
+  for (var i = 0, arr2 = new Array(len); i < len; i++) arr2[i] = arr[i];
+
+  return arr2;
+}
+
+function _createForOfIteratorHelperLoose(o, allowArrayLike) {
+  var it;
+
+  if (typeof Symbol === "undefined" || o[Symbol.iterator] == null) {
+    if (Array.isArray(o) || (it = _unsupportedIterableToArray(o)) || allowArrayLike && o && typeof o.length === "number") {
+      if (it) o = it;
+      var i = 0;
+      return function () {
+        if (i >= o.length) return {
+          done: true
+        };
+        return {
+          done: false,
+          value: o[i++]
+        };
+      };
+    }
+
+    throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.");
+  }
+
+  it = o[Symbol.iterator]();
+  return it.next.bind(it);
+}
+
+var layouts = new Set();
+var registerLayout = function registerLayout(layoutClass) {
+  layouts.add(layoutClass);
+};
+var getLayouts = function getLayouts() {
+  var result = [];
+
+  for (var _iterator = _createForOfIteratorHelperLoose(layouts), _step; !(_step = _iterator()).done;) {
+    var layout = _step.value;
+    result.push(new layout());
+  }
+
+  return result;
+};
+
+function Home(props) {
+  var layouts = getLayouts();
+  return /*#__PURE__*/React.createElement(Layout, {
+    title: "Home"
+  }, /*#__PURE__*/React.createElement("div", {
+    className: "shadow overflow-hidden border-b border-gray-200 sm:rounded-lg"
+  }, /*#__PURE__*/React.createElement("ul", {
+    className: "bg-white divide-y"
+  }, layouts.map(function (layout) {
+    return /*#__PURE__*/React.createElement("li", {
+      key: layout.slug,
+      className: "px-6 py-4"
+    }, /*#__PURE__*/React.createElement(reactRouterDom.Link, {
+      className: "text-blue-500 hover:text-blue-400",
+      to: "/" + layout.slug
+    }, layout.name));
+  }))));
+}
+
+var Home$1 = /*#__PURE__*/function () {
+  function Home$1() {}
+
+  var _proto = Home$1.prototype;
+
+  _proto.render = function render() {
+    return /*#__PURE__*/React.createElement(Home, null);
+  };
+
+  return Home$1;
+}();
+
+function AccessDenied() {
+  return /*#__PURE__*/React.createElement(Layout, {
+    title: "Access denied"
+  });
+}
+
+var App = /*#__PURE__*/function () {
+  function App(layouts) {
+    this.appName = "Dashboard";
+    this.homePath = "/";
+    layouts.map(function (layout) {
+      registerLayout(layout);
+    });
+    this.homeInstance = new Home$1();
+  }
+
+  var _proto = App.prototype;
+
+  _proto.home = function home() {
+    return /*#__PURE__*/React.createElement(reactRouterDom.Route, {
+      exact: true,
+      path: this.homePath
+    }, this.homeInstance.render());
+  };
+
+  _proto.accessDenied = function accessDenied() {
+    return /*#__PURE__*/React.createElement(AccessDenied, null);
+  };
+
+  return App;
+}();
+
 function Form(props) {
   var _React$useState = React.useState(props.initValues),
       values = _React$useState[0],
@@ -150,11 +233,11 @@ function Form(props) {
     props.onSubmit(values);
   };
 
-  return /*#__PURE__*/React.createElement(Fragment, null, props.children({
+  return props.children({
     values: values,
     handleFieldChange: handleFieldChange,
     handleFormSubmit: handleFormSubmit
-  }));
+  });
 }
 function Input(props) {
   return /*#__PURE__*/React.createElement("input", _extends({}, props, {
@@ -366,7 +449,7 @@ function url(path, pathParams, queryParams) {
 }
 
 function Add(props) {
-  var _useParams = useParams(),
+  var _useParams = reactRouterDom.useParams(),
       layoutSlug = _useParams.layoutSlug;
 
   var currentLayout = getLayouts().find(function (layout) {
@@ -426,7 +509,7 @@ function Add(props) {
       })));
     }), /*#__PURE__*/React.createElement("div", {
       className: "py-3 px-3 text-right bg-gray-100 rounded-b-lg"
-    }, /*#__PURE__*/React.createElement(Link, {
+    }, /*#__PURE__*/React.createElement(reactRouterDom.Link, {
       to: url(props.paths.list, [currentLayout.slug]),
       className: "ml-2 inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md bg-white hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
     }, "Cancel"), /*#__PURE__*/React.createElement("button", {
@@ -448,8 +531,123 @@ var Add$1 = /*#__PURE__*/function () {
   return Add$1;
 }();
 
+function NoDataForDisplay() {
+  return /*#__PURE__*/React.createElement(Layout, {
+    title: "No data for display"
+  }, /*#__PURE__*/React.createElement("div", {
+    className: "py-10 flex flex-col items-center border rounded-lg text-gray-500"
+  }, /*#__PURE__*/React.createElement(FeatherIcon, {
+    icon: "inbox",
+    size: 100
+  }), /*#__PURE__*/React.createElement("div", {
+    className: "italic"
+  }, "No Data")));
+}
+
+function List(props) {
+  var _useParams = reactRouterDom.useParams(),
+      layoutSlug = _useParams.layoutSlug;
+
+  var layouts = getLayouts();
+  var currentLayout = layouts.find(function (layout) {
+    return layout.slug === layoutSlug;
+  });
+  var listFieldNames = currentLayout.getListFieldNames();
+
+  if (currentLayout.data.length === 0) {
+    return /*#__PURE__*/React.createElement(NoDataForDisplay, null);
+  }
+
+  return /*#__PURE__*/React.createElement(Layout, {
+    title: "Select " + currentLayout.name + " for edit",
+    headerActions: /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement(reactRouterDom.Link, {
+      to: url(props.paths.add, [currentLayout.slug]),
+      className: "inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md bg-white hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+    }, "Add new")),
+    breadCrumbs: [["/", /*#__PURE__*/React.createElement(FeatherIcon, {
+      icon: "home",
+      size: "16"
+    })], ["", currentLayout.name]]
+  }, /*#__PURE__*/React.createElement("div", {
+    className: "shadow overflow-hidden border-gray-200 sm:rounded-lg"
+  }, /*#__PURE__*/React.createElement("table", {
+    className: "table-auto min-w-full"
+  }, /*#__PURE__*/React.createElement("thead", null, /*#__PURE__*/React.createElement("tr", null, Object.keys(currentLayout.data[0]).map(function (key, index) {
+    if (currentLayout.getListFields().includes(key)) {
+      return /*#__PURE__*/React.createElement("th", {
+        key: key,
+        className: "px-6 py-3 bg-gray-50 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+      }, listFieldNames[key]);
+    } else return null;
+  }), /*#__PURE__*/React.createElement("th", {
+    className: "px-6 py-3 bg-gray-50 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+  }))), /*#__PURE__*/React.createElement("tbody", {
+    className: "bg-white divide-y divide-gray-200"
+  }, currentLayout.data.map(function (dataItem, rowIndex) {
+    return /*#__PURE__*/React.createElement("tr", {
+      key: rowIndex
+    }, Object.keys(dataItem).map(function (key, columnIndex) {
+      if (currentLayout.getListFields().includes(key)) {
+        return /*#__PURE__*/React.createElement("td", {
+          key: dataItem[key],
+          className: "px-6 py-4 whitespace-nowrap"
+        }, columnIndex === 0 ? /*#__PURE__*/React.createElement(reactRouterDom.Link, {
+          to: "/" + currentLayout.slug + "/" + dataItem[currentLayout.primaryKey],
+          className: "text-blue-500 hover:text-blue-400"
+        }, dataItem[key]) : dataItem[key]);
+      } else {
+        return null;
+      }
+    }), /*#__PURE__*/React.createElement("td", {
+      className: "px-6 py-4 text-right text-sm"
+    }, /*#__PURE__*/React.createElement("div", {
+      className: "inline-block text-red-400 cursor-pointer hover:underline",
+      onClick: function onClick() {
+        return currentLayout.handleDeleteOne(dataItem[currentLayout.primaryKey]);
+      }
+    }, "Delete")));
+  })))), currentLayout.displayPagination && /*#__PURE__*/React.createElement("div", {
+    className: "py-4 text-right flex justify-between items-center"
+  }, /*#__PURE__*/React.createElement("div", {
+    className: "text-gray-500 text-sm"
+  }, currentLayout.getPaginationText()), /*#__PURE__*/React.createElement("nav", {
+    className: "relative z-0 inline-flex shadow-sm -space-x-px",
+    "aria-label": "Pagination"
+  }, /*#__PURE__*/React.createElement("div", {
+    onClick: function onClick() {
+      return currentLayout.handleClickPaginationPrev();
+    },
+    className: "cursor-pointer relative inline-flex items-center px-1 py-1 rounded-l-md border border-gray-300 bg-white text-sm font-medium text-gray-500 hover:bg-gray-50"
+  }, /*#__PURE__*/React.createElement("span", {
+    className: "sr-only"
+  }, "Previous"), /*#__PURE__*/React.createElement(FeatherIcon, {
+    icon: "chevron-left"
+  })), /*#__PURE__*/React.createElement("div", {
+    onClick: function onClick() {
+      return currentLayout.handleClickPaginationNext();
+    },
+    className: "cursor-pointer relative inline-flex items-center px-1 py-1 rounded-r-md border border-gray-300 bg-white text-sm font-medium text-gray-500 hover:bg-gray-50"
+  }, /*#__PURE__*/React.createElement("span", {
+    className: "sr-only"
+  }, "Next"), /*#__PURE__*/React.createElement(FeatherIcon, {
+    icon: "chevron-right"
+  })))));
+}
+
+var List$1 = /*#__PURE__*/function () {
+  function List$1() {}
+
+  var _proto = List$1.prototype;
+
+  _proto.render = function render(props) {
+    return /*#__PURE__*/React.createElement(List, props);
+  };
+
+  return List$1;
+}();
+
 function Edit(props) {
-  var _useParams = useParams(),
+  var _useParams = reactRouterDom.useParams(),
       layoutSlug = _useParams.layoutSlug,
       id = _useParams.id;
 
@@ -518,7 +716,7 @@ function Edit(props) {
       })));
     }), /*#__PURE__*/React.createElement("div", {
       className: "py-3 px-3 text-right bg-gray-100 rounded-b-lg"
-    }, /*#__PURE__*/React.createElement(Link, {
+    }, /*#__PURE__*/React.createElement(reactRouterDom.Link, {
       to: url(props.paths.list, [currentLayout.slug]),
       className: "ml-2 inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md bg-white hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
     }, "Cancel"), /*#__PURE__*/React.createElement("button", {
@@ -540,194 +738,6 @@ var Edit$1 = /*#__PURE__*/function () {
   return Edit$1;
 }();
 
-function NoDataForDisplay() {
-  return /*#__PURE__*/React.createElement(Layout, {
-    title: "No data for display"
-  }, /*#__PURE__*/React.createElement("div", {
-    className: "py-10 flex flex-col items-center border rounded-lg text-gray-500"
-  }, /*#__PURE__*/React.createElement(FeatherIcon, {
-    icon: "inbox",
-    size: 100
-  }), /*#__PURE__*/React.createElement("div", {
-    className: "italic"
-  }, "No Data")));
-}
-
-function List(props) {
-  var layouts = getLayouts();
-
-  var _useParams = useParams(),
-      layoutSlug = _useParams.layoutSlug;
-
-  var currentLayout = layouts.find(function (layout) {
-    return layout.slug === layoutSlug;
-  });
-  var listFieldNames = currentLayout.getListFieldNames();
-
-  if (currentLayout.data.length === 0) {
-    return /*#__PURE__*/React.createElement(NoDataForDisplay, null);
-  }
-
-  return /*#__PURE__*/React.createElement(Layout, {
-    title: "Select " + currentLayout.name + " for edit",
-    headerActions: /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement(Link, {
-      to: url(props.paths.add, [currentLayout.slug]),
-      className: "inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md bg-white hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-    }, "Add new")),
-    breadCrumbs: [["/", /*#__PURE__*/React.createElement(FeatherIcon, {
-      icon: "home",
-      size: "16"
-    })], ["", currentLayout.name]]
-  }, /*#__PURE__*/React.createElement("div", {
-    className: "shadow overflow-hidden border-gray-200 sm:rounded-lg"
-  }, /*#__PURE__*/React.createElement("table", {
-    className: "table-auto min-w-full"
-  }, /*#__PURE__*/React.createElement("thead", null, /*#__PURE__*/React.createElement("tr", null, Object.keys(currentLayout.data[0]).map(function (key, index) {
-    if (currentLayout.getListFields().includes(key)) {
-      return /*#__PURE__*/React.createElement("th", {
-        key: key,
-        className: "px-6 py-3 bg-gray-50 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
-      }, listFieldNames[key]);
-    } else return null;
-  }), /*#__PURE__*/React.createElement("th", {
-    className: "px-6 py-3 bg-gray-50 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
-  }))), /*#__PURE__*/React.createElement("tbody", {
-    className: "bg-white divide-y divide-gray-200"
-  }, currentLayout.data.map(function (dataItem, rowIndex) {
-    return /*#__PURE__*/React.createElement("tr", {
-      key: rowIndex
-    }, Object.keys(dataItem).map(function (key, columnIndex) {
-      if (currentLayout.getListFields().includes(key)) {
-        return /*#__PURE__*/React.createElement("td", {
-          key: dataItem[key],
-          className: "px-6 py-4 whitespace-nowrap"
-        }, columnIndex === 0 ? /*#__PURE__*/React.createElement(Link, {
-          to: "/" + currentLayout.slug + "/" + dataItem[currentLayout.primaryKey],
-          className: "text-blue-500 hover:text-blue-400"
-        }, dataItem[key]) : dataItem[key]);
-      } else {
-        return null;
-      }
-    }), /*#__PURE__*/React.createElement("td", {
-      className: "px-6 py-4 text-right text-sm"
-    }, /*#__PURE__*/React.createElement("div", {
-      className: "inline-block text-red-400 cursor-pointer hover:underline",
-      onClick: function onClick() {
-        return currentLayout.handleDeleteOne(dataItem[currentLayout.primaryKey]);
-      }
-    }, "Delete")));
-  })))), currentLayout.displayPagination && /*#__PURE__*/React.createElement("div", {
-    className: "py-4 text-right flex justify-between items-center"
-  }, /*#__PURE__*/React.createElement("div", {
-    className: "text-gray-500 text-sm"
-  }, currentLayout.getPaginationText()), /*#__PURE__*/React.createElement("nav", {
-    className: "relative z-0 inline-flex shadow-sm -space-x-px",
-    "aria-label": "Pagination"
-  }, /*#__PURE__*/React.createElement("div", {
-    onClick: function onClick() {
-      return currentLayout.handleClickPaginationPrev();
-    },
-    className: "cursor-pointer relative inline-flex items-center px-1 py-1 rounded-l-md border border-gray-300 bg-white text-sm font-medium text-gray-500 hover:bg-gray-50"
-  }, /*#__PURE__*/React.createElement("span", {
-    className: "sr-only"
-  }, "Previous"), /*#__PURE__*/React.createElement(FeatherIcon, {
-    icon: "chevron-left"
-  })), /*#__PURE__*/React.createElement("div", {
-    onClick: function onClick() {
-      return currentLayout.handleClickPaginationNext();
-    },
-    className: "cursor-pointer relative inline-flex items-center px-1 py-1 rounded-r-md border border-gray-300 bg-white text-sm font-medium text-gray-500 hover:bg-gray-50"
-  }, /*#__PURE__*/React.createElement("span", {
-    className: "sr-only"
-  }, "Next"), /*#__PURE__*/React.createElement(FeatherIcon, {
-    icon: "chevron-right"
-  })))));
-}
-
-var List$1 = /*#__PURE__*/function () {
-  function List$1() {}
-
-  var _proto = List$1.prototype;
-
-  _proto.render = function render(props) {
-    return /*#__PURE__*/React.createElement(List, props);
-  };
-
-  return List$1;
-}();
-
-function AccessDenied() {
-  return /*#__PURE__*/React.createElement(Layout, {
-    title: "Access denied"
-  });
-}
-
-var App = /*#__PURE__*/function () {
-  function App() {
-    this.appName = "Dashboard";
-    this.homePath = "/";
-    this.addPath = "/:layoutSlug/add";
-    this.listPath = "/:layoutSlug";
-    this.editPath = "/:layoutSlug/:id";
-  }
-
-  var _proto = App.prototype;
-
-  _proto.getPaths = function getPaths() {
-    return {
-      add: this.addPath,
-      list: this.listPath,
-      edit: this.editPath
-    };
-  };
-
-  _proto.home = function home() {
-    var homeInstance = new Home$1();
-    return /*#__PURE__*/React.createElement(Route, {
-      exact: true,
-      path: this.homePath
-    }, homeInstance.render({
-      paths: this.getPaths()
-    }));
-  };
-
-  _proto.list = function list() {
-    var listInstance = new List$1();
-    return /*#__PURE__*/React.createElement(Route, {
-      exact: true,
-      path: this.listPath
-    }, listInstance.render({
-      paths: this.getPaths()
-    }));
-  };
-
-  _proto.add = function add() {
-    var addInstance = new Add$1();
-    return /*#__PURE__*/React.createElement(Route, {
-      exact: true,
-      path: this.addPath
-    }, addInstance.render({
-      paths: this.getPaths()
-    }));
-  };
-
-  _proto.edit = function edit() {
-    var editInstance = new Edit$1();
-    return /*#__PURE__*/React.createElement(Route, {
-      exact: true,
-      path: this.editPath
-    }, editInstance.render({
-      paths: this.getPaths()
-    }));
-  };
-
-  _proto.accessDenied = function accessDenied() {
-    return /*#__PURE__*/React.createElement(AccessDenied, null);
-  };
-
-  return App;
-}();
-
 var Layout$1 = /*#__PURE__*/function () {
   function Layout() {
     this.name = "";
@@ -738,6 +748,17 @@ var Layout$1 = /*#__PURE__*/function () {
     this.listFieldNames = [];
     this.primaryKey = "id";
     this.displayPagination = true;
+    this.addPath = "/:layoutSlug/add";
+    this.listPath = "/:layoutSlug";
+    this.editPath = "/:layoutSlug/:id";
+    this.paths = {
+      add: this.addPath,
+      list: this.listPath,
+      edit: this.editPath
+    };
+    this.listObj = new List$1();
+    this.addObj = new Add$1();
+    this.editObj = new Edit$1();
   }
 
   var _proto = Layout.prototype;
@@ -765,6 +786,10 @@ var Layout$1 = /*#__PURE__*/function () {
     return this.listFieldNames;
   };
 
+  _proto.getPaginationText = function getPaginationText() {
+    return "";
+  };
+
   _proto.handleDeleteOne = function handleDeleteOne(uniqFieldValue) {
     console.log(uniqFieldValue);
   };
@@ -777,8 +802,35 @@ var Layout$1 = /*#__PURE__*/function () {
     console.info("Define handleClickPaginationPrev method in your layout for handle pagination prev");
   };
 
-  _proto.getPaginationText = function getPaginationText() {
-    return "";
+  _proto.list = function list() {
+    return /*#__PURE__*/React.createElement(reactRouterDom.Route, {
+      exact: true,
+      path: this.listPath
+    }, this.listObj.render({
+      paths: this.paths
+    }));
+  };
+
+  _proto.add = function add() {
+    return /*#__PURE__*/React.createElement(reactRouterDom.Route, {
+      exact: true,
+      path: this.addPath
+    }, this.addObj.render({
+      paths: this.paths
+    }));
+  };
+
+  _proto.edit = function edit() {
+    return /*#__PURE__*/React.createElement(reactRouterDom.Route, {
+      exact: true,
+      path: this.editPath
+    }, this.editObj.render({
+      paths: this.paths
+    }));
+  };
+
+  _proto.pages = function pages() {
+    return [this.add(), this.edit(), this.list()];
   };
 
   return Layout;
@@ -796,19 +848,29 @@ var AppContext = React.createContext();
 function Fub(props) {
   var getAppInstance = function getAppInstance() {
     if (props.customAppClass) {
-      return new props.customAppClass();
+      return new props.customAppClass(props.layouts);
     }
 
-    return new App();
+    return new App(props.layouts);
   };
 
   var appInstance = getAppInstance();
   var app = {};
   return /*#__PURE__*/React.createElement(AppContext.Provider, {
     value: app
-  }, /*#__PURE__*/React.createElement(BrowserRouter, null, /*#__PURE__*/React.createElement(Switch, null, appInstance.add(), appInstance.edit(), appInstance.list(), appInstance.home())));
+  }, /*#__PURE__*/React.createElement(reactRouterDom.BrowserRouter, null, /*#__PURE__*/React.createElement(reactRouterDom.Switch, null, appInstance.home(), getLayouts().map(function (layout) {
+    return layout.pages();
+  }))));
 }
 
-export default Fub;
-export { AppContext, BooleanField, CharField, ChoiceField, Layout$1 as Layout, Model, ModelField, TextField, registerLayout };
-//# sourceMappingURL=index.m.js.map
+exports.AppContext = AppContext;
+exports.BooleanField = BooleanField;
+exports.CharField = CharField;
+exports.ChoiceField = ChoiceField;
+exports.Layout = Layout$1;
+exports.Model = Model;
+exports.ModelField = ModelField;
+exports.TextField = TextField;
+exports.default = Fub;
+exports.registerLayout = registerLayout;
+//# sourceMappingURL=fub.js.map

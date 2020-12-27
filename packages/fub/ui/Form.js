@@ -12,15 +12,11 @@ export default function Form(props) {
     props.onSubmit(values);
   };
 
-  return (
-    <>
-      {props.children({
-        values,
-        handleFieldChange,
-        handleFormSubmit,
-      })}
-    </>
-  );
+  return props.children({
+    values,
+    handleFieldChange,
+    handleFormSubmit,
+  });
 }
 
 export function Input(props) {

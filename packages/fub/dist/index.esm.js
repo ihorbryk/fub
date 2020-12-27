@@ -1,8 +1,6 @@
-function _interopDefault (ex) { return (ex && (typeof ex === 'object') && 'default' in ex) ? ex['default'] : ex; }
-
-var React = _interopDefault(require('react'));
-var reactRouterDom = require('react-router-dom');
-var FeatherIcon = _interopDefault(require('feather-icons-react'));
+import React from 'react';
+import { Link, Route, useParams, BrowserRouter, Switch } from 'react-router-dom';
+import FeatherIcon from 'feather-icons-react';
 
 function Header() {
   return /*#__PURE__*/React.createElement("div", {
@@ -15,7 +13,7 @@ function Header() {
     className: "flex items-center"
   }, /*#__PURE__*/React.createElement("div", {
     className: "flex-shrink-0"
-  }, /*#__PURE__*/React.createElement(reactRouterDom.Link, {
+  }, /*#__PURE__*/React.createElement(Link, {
     to: "/"
   }, /*#__PURE__*/React.createElement("div", {
     className: "text-white font-bold border border-white w-8 h-8 flex items-center justify-center rounded-lg"
@@ -36,7 +34,7 @@ function Layout(props) {
   var breadCrumbsBuilder = function breadCrumbsBuilder(breadCrumbsArray) {
     var breadCrumbs = breadCrumbsArray.map(function (item) {
       if (item[0].length > 0) {
-        return /*#__PURE__*/React.createElement(reactRouterDom.Link, {
+        return /*#__PURE__*/React.createElement(Link, {
           key: item[1],
           to: item[0],
           className: ""
@@ -166,7 +164,7 @@ function Home(props) {
     return /*#__PURE__*/React.createElement("li", {
       key: layout.slug,
       className: "px-6 py-4"
-    }, /*#__PURE__*/React.createElement(reactRouterDom.Link, {
+    }, /*#__PURE__*/React.createElement(Link, {
       className: "text-blue-500 hover:text-blue-400",
       to: "/" + layout.slug
     }, layout.name));
@@ -204,7 +202,7 @@ var App = /*#__PURE__*/function () {
 
   _proto.home = function home() {
     var homeInstance = new Home$1();
-    return /*#__PURE__*/React.createElement(reactRouterDom.Route, {
+    return /*#__PURE__*/React.createElement(Route, {
       exact: true,
       path: this.homePath
     }, homeInstance.render());
@@ -449,7 +447,7 @@ function url(path, pathParams, queryParams) {
 }
 
 function Add(props) {
-  var _useParams = reactRouterDom.useParams(),
+  var _useParams = useParams(),
       layoutSlug = _useParams.layoutSlug;
 
   var currentLayout = getLayouts().find(function (layout) {
@@ -509,7 +507,7 @@ function Add(props) {
       })));
     }), /*#__PURE__*/React.createElement("div", {
       className: "py-3 px-3 text-right bg-gray-100 rounded-b-lg"
-    }, /*#__PURE__*/React.createElement(reactRouterDom.Link, {
+    }, /*#__PURE__*/React.createElement(Link, {
       to: url(props.paths.list, [currentLayout.slug]),
       className: "ml-2 inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md bg-white hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
     }, "Cancel"), /*#__PURE__*/React.createElement("button", {
@@ -545,7 +543,7 @@ function NoDataForDisplay() {
 }
 
 function List(props) {
-  var _useParams = reactRouterDom.useParams(),
+  var _useParams = useParams(),
       layoutSlug = _useParams.layoutSlug;
 
   console.log("hello world");
@@ -563,7 +561,7 @@ function List(props) {
 
   return /*#__PURE__*/React.createElement(Layout, {
     title: "Select " + currentLayout.name + " for edit",
-    headerActions: /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement(reactRouterDom.Link, {
+    headerActions: /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement(Link, {
       to: url(props.paths.add, [currentLayout.slug]),
       className: "inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md bg-white hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
     }, "Add new")),
@@ -594,7 +592,7 @@ function List(props) {
         return /*#__PURE__*/React.createElement("td", {
           key: dataItem[key],
           className: "px-6 py-4 whitespace-nowrap"
-        }, columnIndex === 0 ? /*#__PURE__*/React.createElement(reactRouterDom.Link, {
+        }, columnIndex === 0 ? /*#__PURE__*/React.createElement(Link, {
           to: "/" + currentLayout.slug + "/" + dataItem[currentLayout.primaryKey],
           className: "text-blue-500 hover:text-blue-400"
         }, dataItem[key]) : dataItem[key]);
@@ -650,7 +648,7 @@ var List$1 = /*#__PURE__*/function () {
 }();
 
 function Edit(props) {
-  var _useParams = reactRouterDom.useParams(),
+  var _useParams = useParams(),
       layoutSlug = _useParams.layoutSlug,
       id = _useParams.id;
 
@@ -719,7 +717,7 @@ function Edit(props) {
       })));
     }), /*#__PURE__*/React.createElement("div", {
       className: "py-3 px-3 text-right bg-gray-100 rounded-b-lg"
-    }, /*#__PURE__*/React.createElement(reactRouterDom.Link, {
+    }, /*#__PURE__*/React.createElement(Link, {
       to: url(props.paths.list, [currentLayout.slug]),
       className: "ml-2 inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md bg-white hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
     }, "Cancel"), /*#__PURE__*/React.createElement("button", {
@@ -799,7 +797,7 @@ var Layout$1 = /*#__PURE__*/function () {
   };
 
   _proto.list = function list() {
-    return /*#__PURE__*/React.createElement(reactRouterDom.Route, {
+    return /*#__PURE__*/React.createElement(Route, {
       exact: true,
       path: this.listPath
     }, this.listObj.render());
@@ -807,7 +805,7 @@ var Layout$1 = /*#__PURE__*/function () {
 
   _proto.add = function add() {
     var addInstance = new Add$1();
-    return /*#__PURE__*/React.createElement(reactRouterDom.Route, {
+    return /*#__PURE__*/React.createElement(Route, {
       exact: true,
       path: this.addPath
     }, addInstance.render());
@@ -815,7 +813,7 @@ var Layout$1 = /*#__PURE__*/function () {
 
   _proto.edit = function edit() {
     var editInstance = new Edit$1();
-    return /*#__PURE__*/React.createElement(reactRouterDom.Route, {
+    return /*#__PURE__*/React.createElement(Route, {
       exact: true,
       path: this.editPath
     }, editInstance.render());
@@ -851,22 +849,14 @@ function Fub(props) {
 
   return /*#__PURE__*/React.createElement(AppContext.Provider, {
     value: app
-  }, /*#__PURE__*/React.createElement(reactRouterDom.BrowserRouter, null, /*#__PURE__*/React.createElement(reactRouterDom.Switch, null, appInstance.home(), getLayouts().map(function (layout) {
-    return /*#__PURE__*/React.createElement(reactRouterDom.Route, {
+  }, /*#__PURE__*/React.createElement(BrowserRouter, null, /*#__PURE__*/React.createElement(Switch, null, appInstance.home(), getLayouts().map(function (layout) {
+    return /*#__PURE__*/React.createElement(Route, {
       exact: true,
       path: layout.addPath
     }, layout.render());
   }))));
 }
 
-exports.AppContext = AppContext;
-exports.BooleanField = BooleanField;
-exports.CharField = CharField;
-exports.ChoiceField = ChoiceField;
-exports.Layout = Layout$1;
-exports.Model = Model;
-exports.ModelField = ModelField;
-exports.TextField = TextField;
-exports.default = Fub;
-exports.registerLayout = registerLayout;
-//# sourceMappingURL=index.js.map
+export default Fub;
+export { AppContext, BooleanField, CharField, ChoiceField, Layout$1 as Layout, Model, ModelField, TextField, registerLayout };
+//# sourceMappingURL=index.esm.js.map

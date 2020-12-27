@@ -1,9 +1,11 @@
-const layouts = [];
+const layouts = new Set();
 
 export const registerLayout = (layoutClass) => {
-  layouts.push(new layoutClass());
+  layouts.add(layoutClass);
 };
 
 export const getLayouts = () => {
-  return layouts;
+  const result = [];
+  for (let layout of layouts) result.push(new layout());
+  return result;
 };

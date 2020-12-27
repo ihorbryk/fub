@@ -118,14 +118,14 @@ class App {
     layouts.map(layout => {
       registerLayout(layout);
     });
+    this.homeInstance = new Home$1();
   }
 
   home() {
-    const homeInstance = new Home$1();
     return /*#__PURE__*/React.createElement(Route, {
       exact: true,
       path: this.homePath
-    }, homeInstance.render());
+    }, this.homeInstance.render());
   }
 
   accessDenied() {
@@ -148,11 +148,11 @@ function Form(props) {
     props.onSubmit(values);
   };
 
-  return /*#__PURE__*/React.createElement(Fragment, null, props.children({
+  return props.children({
     values,
     handleFieldChange,
     handleFormSubmit
-  }));
+  });
 }
 function Input(props) {
   return /*#__PURE__*/React.createElement("input", Object.assign({}, props, {
@@ -405,11 +405,8 @@ function List(props) {
   const {
     layoutSlug
   } = useParams();
-  console.log("hello world");
   const layouts = getLayouts();
-  console.log("-->", layouts);
   const currentLayout = layouts.find(layout => layout.slug === layoutSlug);
-  console.log(currentLayout);
   const listFieldNames = currentLayout.getListFieldNames();
 
   if (currentLayout.data.length === 0) {
@@ -584,7 +581,14 @@ class Layout$1 {
     this.addPath = "/:layoutSlug/add";
     this.listPath = "/:layoutSlug";
     this.editPath = "/:layoutSlug/:id";
+    this.paths = {
+      add: this.addPath,
+      list: this.listPath,
+      edit: this.editPath
+    };
     this.listObj = new List$1();
+    this.addObj = new Add$1();
+    this.editObj = new Edit$1();
   }
 
   getListFields() {
@@ -610,6 +614,10 @@ class Layout$1 {
     return this.listFieldNames;
   }
 
+  getPaginationText() {
+    return "";
+  }
+
   handleDeleteOne(uniqFieldValue) {
     console.log(uniqFieldValue);
   }
@@ -622,35 +630,35 @@ class Layout$1 {
     console.info("Define handleClickPaginationPrev method in your layout for handle pagination prev");
   }
 
-  getPaginationText() {
-    return "";
-  }
-
   list() {
     return /*#__PURE__*/React.createElement(Route, {
       exact: true,
       path: this.listPath
-    }, this.listObj.render());
+    }, this.listObj.render({
+      paths: this.paths
+    }));
   }
 
   add() {
-    const addInstance = new Add$1();
     return /*#__PURE__*/React.createElement(Route, {
       exact: true,
       path: this.addPath
-    }, addInstance.render());
+    }, this.addObj.render({
+      paths: this.paths
+    }));
   }
 
   edit() {
-    const editInstance = new Edit$1();
     return /*#__PURE__*/React.createElement(Route, {
       exact: true,
       path: this.editPath
-    }, editInstance.render());
+    }, this.editObj.render({
+      paths: this.paths
+    }));
   }
 
   pages() {
-    return [this.add(), this.list(), this.edit()];
+    return [this.add(), this.edit(), this.list()];
   }
 
 }
@@ -678,17 +686,13 @@ function Fub(props) {
 
   const appInstance = getAppInstance();
   const app = {};
-
   return /*#__PURE__*/React.createElement(AppContext.Provider, {
     value: app
   }, /*#__PURE__*/React.createElement(BrowserRouter, null, /*#__PURE__*/React.createElement(Switch, null, appInstance.home(), getLayouts().map(layout => {
-    return /*#__PURE__*/React.createElement(Route, {
-      exact: true,
-      path: layout.addPath
-    }, layout.render());
+    return layout.pages();
   }))));
 }
 
 export default Fub;
 export { AppContext, BooleanField, CharField, ChoiceField, Layout$1 as Layout, Model, ModelField, TextField, registerLayout };
-//# sourceMappingURL=index.modern.js.map
+//# sourceMappingURL=fub.modern.js.map

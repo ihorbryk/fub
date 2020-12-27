@@ -2,9 +2,10 @@
   "name": "fub",
   "version": "0.0.1",
   "private": true,
-  "main": "dist/index.js",
-  "module": "dist/index.m.js",
-  "esmodule": "dist/index.modern.js",
+  "main": "dist/fub.js",            
+  "umd:main": "dist/fub.umd.js",    
+  "module": "dist/fub.m.js",        
+  "esmodule": "dist/fub.modern.js", 
   "source": "Fub.js",
   "scripts": {
     "build": "microbundle-crl --no-compress",

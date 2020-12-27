@@ -1,11 +1,7 @@
 import Fub from "fub";
-import { registerLayout } from "fub";
-import PostLayout from "./layouts/PostLayout";
 import AuthorLayout from "./layouts/AuthorLayout";
+import PostLayout from "./layouts/PostLayout";
 
-registerLayout(PostLayout);
-registerLayout(AuthorLayout);
-
-const App = () => <Fub />;
+const App = () => <Fub layouts={[AuthorLayout, PostLayout]} />;
 
 export default App;
