@@ -12,6 +12,32 @@ export default function List(props) {
   const currentLayout = layouts.find((layout) => layout.slug === layoutSlug);
   const listFieldNames = currentLayout.getListFieldNames();
 
+  const [selectedItems, setSelectedItems] = React.useState([]);
+  const [selectedAction, setSelectedAction] = React.useState("");
+
+  const handleSelectItem = (item) => {
+    if (selectedItems.includes(item)) {
+      setSelectedItems(
+        selectedItems.filter((selectedItem) => selectedItem != item)
+      );
+    } else {
+      setSelectedItems([...selectedItems, item]);
+    }
+  };
+
+  const handleSelectAction = (e) => {
+    setSelectedAction(e.target.value);
+  };
+
+  const handleRunAction = () => {
+    if (selectedAction) {
+      const actionForRun = currentLayout.listActions.find(
+        (action) => action.name == selectedAction
+      );
+      actionForRun.run(selectedItems);
+    }
+  };
+
   if (currentLayout.data.length === 0) {
     return <NoDataForDisplay />;
   }
@@ -34,10 +60,36 @@ export default function List(props) {
         ["", currentLayout.name],
       ]}
     >
+      <div className="py-3 mb-2 text-sm flex items-center text-gray-500">
+        Action:{" "}
+        <select
+          className="ml-2 px-2 py-1 pr-3 border mt-1 focus:ring-indigo-500 focus:border-indigo-500 block sm:text-sm border-gray-300 rounded-md"
+          onChange={(e) => handleSelectAction(e)}
+          value={selectedAction}
+        >
+          <option value="">---</option>
+          {currentLayout.listActions.map((action) => (
+            <option key={action.name} value={action.name}>
+              {action.title}
+            </option>
+          ))}
+        </select>{" "}
+        <button
+          className="ml-2 inline-flex justify-center py-1 px-2 border border-transparent shadow-sm text-sm font-medium rounded-md text-black bg-white hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+          onClick={() => handleRunAction()}
+        >
+          Apply
+        </button>{" "}
+        <span className="ml-2">
+          Selected {selectedItems.length} objects from{" "}
+          {currentLayout.data.length}
+        </span>
+      </div>
       <div className="shadow overflow-hidden border-gray-200 sm:rounded-lg">
         <table className="table-auto min-w-full">
           <thead>
             <tr>
+              <th className="bg-gray-50 w-max" />
               {Object.keys(currentLayout.data[0]).map((key, index) => {
                 if (currentLayout.getListFields().includes(key)) {
                   return (
@@ -56,6 +108,13 @@ export default function List(props) {
           <tbody className="bg-white divide-y divide-gray-200">
             {currentLayout.data.map((dataItem, rowIndex) => (
               <tr key={rowIndex}>
+                <td className="w-4 pl-4 py-4 whitespace-nowrap">
+                  <input
+                    type="checkbox"
+                    className="focus:ring-indigo-500 h-4 w-4 text-indigo-600 border-gray-300 rounded"
+                    onClick={() => handleSelectItem(dataItem)}
+                  />
+                </td>
                 {Object.keys(dataItem).map((key, columnIndex) => {
                   if (currentLayout.getListFields().includes(key)) {
                     return (

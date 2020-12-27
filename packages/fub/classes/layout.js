@@ -29,6 +29,9 @@ export default class Layout {
   // Choise display pagination or not
   displayPagination = true;
 
+  // Actions aplied for batch selected items in list
+  listActions = [];
+
   // Url for add page
   addPath = "/:layoutSlug/add";
 
