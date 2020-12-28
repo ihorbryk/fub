@@ -11,9 +11,11 @@ import {
 import Layout from "./classes/Layout";
 import Model from "./classes/Model";
 import { registerLayout, getLayouts } from "./services/layout";
+import { ListAction } from "./classes/ListAction";
 
 export { Layout, Model, registerLayout };
 export { ModelField, CharField, TextField, BooleanField, ChoiceField };
+export { ListAction };
 
 export const AppContext = React.createContext();
 

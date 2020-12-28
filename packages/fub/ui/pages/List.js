@@ -12,6 +12,40 @@ export default function List(props) {
   const currentLayout = layouts.find((layout) => layout.slug === layoutSlug);
   const listFieldNames = currentLayout.getListFieldNames();
 
+  const [checkedItems, setCheckedItems] = React.useState([]);
+  const [selectedAction, setSelectedAction] = React.useState("");
+
+  const handleCheckItem = (item) => {
+    if (checkedItems.includes(item)) {
+      setCheckedItems(
+        checkedItems.filter((checkedItem) => checkedItem != item)
+      );
+    } else {
+      setCheckedItems([...checkedItems, item]);
+    }
+  };
+
+  const handleCheckAllItems = () => {
+    if (checkedItems.length > 0) {
+      setCheckedItems([]);
+    } else {
+      setCheckedItems(currentLayout.data);
+    }
+  };
+
+  const handleSelectAction = (e) => {
+    setSelectedAction(e.target.value);
+  };
+
+  const handleRunAction = () => {
+    if (selectedAction) {
+      const actionForRun = currentLayout.defaultListActions
+        .concat(currentLayout.listActions)
+        .find((action) => action.name == selectedAction);
+      actionForRun.run(checkedItems);
+    }
+  };
+
   if (currentLayout.data.length === 0) {
     return <NoDataForDisplay />;
   }
@@ -34,10 +68,48 @@ export default function List(props) {
         ["", currentLayout.name],
       ]}
     >
+      <div className="py-3 mb-2 text-sm flex items-center text-gray-500">
+        Action:{" "}
+        <select
+          className="ml-2 px-2 py-1 pr-3 border mt-1 focus:ring-indigo-500 focus:border-indigo-500 block sm:text-sm border-gray-300 rounded-md"
+          onChange={(e) => handleSelectAction(e)}
+          value={selectedAction}
+        >
+          <option value="">---</option>
+          {currentLayout.defaultListActions.map((action) => (
+            <option key={action.name} value={action.name}>
+              {action.title}
+            </option>
+          ))}
+          {currentLayout.listActions.map((action) => (
+            <option key={action.name} value={action.name}>
+              {action.title}
+            </option>
+          ))}
+        </select>{" "}
+        <button
+          className="ml-2 inline-flex justify-center py-1 px-2 border border-transparent shadow-sm text-sm font-medium rounded-md text-black bg-white hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+          onClick={() => handleRunAction()}
+        >
+          Apply
+        </button>{" "}
+        <span className="ml-2">
+          Selected {checkedItems.length} objects from{" "}
+          {currentLayout.data.length}
+        </span>
+      </div>
       <div className="shadow overflow-hidden border-gray-200 sm:rounded-lg">
         <table className="table-auto min-w-full">
           <thead>
             <tr>
+              <th className="bg-gray-50 w-4 pl-4 py-3">
+                <input
+                  type="checkbox"
+                  className="focus:ring-indigo-500 h-4 w-4 text-indigo-600 border-gray-300 rounded"
+                  onChange={() => handleCheckAllItems()}
+                  checked={checkedItems.length == currentLayout.data.length}
+                />
+              </th>
               {Object.keys(currentLayout.data[0]).map((key, index) => {
                 if (currentLayout.getListFields().includes(key)) {
                   return (
@@ -55,7 +127,20 @@ export default function List(props) {
           </thead>
           <tbody className="bg-white divide-y divide-gray-200">
             {currentLayout.data.map((dataItem, rowIndex) => (
-              <tr key={rowIndex}>
+              <tr
+                key={rowIndex}
+                className={
+                  checkedItems.includes(dataItem) ? "bg-yellow-100" : ""
+                }
+              >
+                <td className="w-4 pl-4 py-4 whitespace-nowrap">
+                  <input
+                    type="checkbox"
+                    className="focus:ring-indigo-500 h-4 w-4 text-indigo-600 border-gray-300 rounded"
+                    onChange={() => handleCheckItem(dataItem)}
+                    checked={checkedItems.includes(dataItem)}
+                  />
+                </td>
                 {Object.keys(dataItem).map((key, columnIndex) => {
                   if (currentLayout.getListFields().includes(key)) {
                     return (
