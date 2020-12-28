@@ -12,6 +12,9 @@ export default class App {
   // Url for home page
   homePath = "/";
 
+  // Custom routes for custom pages
+  customRoutes = [];
+
   constructor(layouts) {
     layouts.map((layout) => {
       registerLayout(layout);
@@ -26,6 +29,10 @@ export default class App {
         {this.homeInstance.render()}
       </Route>
     );
+  }
+
+  getCustomRoutes() {
+    return this.customRoutes.map((item, key) => item.render(key));
   }
 
   // return access denied page component
