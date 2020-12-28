@@ -12,16 +12,24 @@ export default function List(props) {
   const currentLayout = layouts.find((layout) => layout.slug === layoutSlug);
   const listFieldNames = currentLayout.getListFieldNames();
 
-  const [selectedItems, setSelectedItems] = React.useState([]);
+  const [checkedItems, setCheckedItems] = React.useState([]);
   const [selectedAction, setSelectedAction] = React.useState("");
 
-  const handleSelectItem = (item) => {
-    if (selectedItems.includes(item)) {
-      setSelectedItems(
-        selectedItems.filter((selectedItem) => selectedItem != item)
+  const handleCheckItem = (item) => {
+    if (checkedItems.includes(item)) {
+      setCheckedItems(
+        checkedItems.filter((checkedItem) => checkedItem != item)
       );
     } else {
-      setSelectedItems([...selectedItems, item]);
+      setCheckedItems([...checkedItems, item]);
+    }
+  };
+
+  const handleCheckAllItems = () => {
+    if (checkedItems.length > 0) {
+      setCheckedItems([]);
+    } else {
+      setCheckedItems(currentLayout.data);
     }
   };
 
@@ -34,7 +42,7 @@ export default function List(props) {
       const actionForRun = currentLayout.listActions.find(
         (action) => action.name == selectedAction
       );
-      actionForRun.run(selectedItems);
+      actionForRun.run(checkedItems);
     }
   };
 
@@ -81,7 +89,7 @@ export default function List(props) {
           Apply
         </button>{" "}
         <span className="ml-2">
-          Selected {selectedItems.length} objects from{" "}
+          Selected {checkedItems.length} objects from{" "}
           {currentLayout.data.length}
         </span>
       </div>
@@ -89,7 +97,14 @@ export default function List(props) {
         <table className="table-auto min-w-full">
           <thead>
             <tr>
-              <th className="bg-gray-50 w-max" />
+              <th className="bg-gray-50 w-4 pl-4 py-3">
+                <input
+                  type="checkbox"
+                  className="focus:ring-indigo-500 h-4 w-4 text-indigo-600 border-gray-300 rounded"
+                  onChange={() => handleCheckAllItems()}
+                  checked={checkedItems.length > 0}
+                />
+              </th>
               {Object.keys(currentLayout.data[0]).map((key, index) => {
                 if (currentLayout.getListFields().includes(key)) {
                   return (
@@ -112,7 +127,8 @@ export default function List(props) {
                   <input
                     type="checkbox"
                     className="focus:ring-indigo-500 h-4 w-4 text-indigo-600 border-gray-300 rounded"
-                    onClick={() => handleSelectItem(dataItem)}
+                    onChange={() => handleCheckItem(dataItem)}
+                    checked={checkedItems.includes(dataItem)}
                   />
                 </td>
                 {Object.keys(dataItem).map((key, columnIndex) => {
