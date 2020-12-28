@@ -25,7 +25,7 @@ export default function Add(props) {
     <Layout
       title={`Add new ${currentLayout.name}`}
       breadCrumbs={[
-        ["/", <FeatherIcon icon="home" size="16" />],
+        ["/", <FeatherIcon icon="home" size="14" />],
         [url(props.paths.list, [currentLayout.slug]), currentLayout.name],
         ["", "Add new"],
       ]}

@@ -65,14 +65,14 @@ export default function List(props) {
         </div>
       }
       breadCrumbs={[
-        ["/", <FeatherIcon icon="home" size="16" />],
+        ["/", <FeatherIcon icon="home" size="14" />],
         ["", currentLayout.name],
       ]}
     >
       <div className="py-3 mb-2 text-sm flex items-center text-gray-500">
         Action:{" "}
         <select
-          className="ml-2 px-2 py-1 pr-3 border mt-1 focus:ring-indigo-500 focus:border-indigo-500 block sm:text-sm border-gray-300 rounded-md"
+          className="ml-2 px-2 py-1 pr-3 border focus:ring-indigo-500 focus:border-indigo-500 focus:outline-none block sm:text-sm border-gray-300 rounded-md"
           onChange={(e) => handleSelectAction(e)}
           value={selectedAction}
         >
@@ -89,7 +89,7 @@ export default function List(props) {
           ))}
         </select>{" "}
         <button
-          className="ml-2 inline-flex justify-center py-1 px-2 border border-transparent shadow-sm text-sm font-medium rounded-md text-black bg-white hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+          className="ml-2 inline-flex justify-center py-1 px-2 border border-transparent shadow-sm text-sm font-medium rounded-md text-black bg-white hover:bg-gray-200 focus:outline-none"
           onClick={() => handleRunAction()}
         >
           Apply

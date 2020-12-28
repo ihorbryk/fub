@@ -33,7 +33,7 @@ export default function Edit(props) {
     <Layout
       title={`Editing ${currentLayout.name}`}
       breadCrumbs={[
-        ["/", <FeatherIcon icon="home" size="16" />],
+        ["/", <FeatherIcon icon="home" size="14" />],
         [url(props.paths.list, [currentLayout.slug]), currentLayout.name],
         ["", "Edit"],
       ]}

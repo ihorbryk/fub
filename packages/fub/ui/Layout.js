@@ -25,8 +25,8 @@ export default function Layout(props) {
       <FeatherIcon
         key={index}
         icon="chevron-right"
-        size="20"
-        className="mx-4"
+        size="14"
+        className="mx-1"
       />,
       curr,
     ]);
@@ -36,7 +36,7 @@ export default function Layout(props) {
       <Header />
       <div className="container mx-auto">
         {props.breadCrumbs && (
-          <div className="flex pt-12 items-center text-gray-500">
+          <div className="flex pt-12 items-center text-gray-500 text-xs">
             {breadCrumbsBuilder(props.breadCrumbs)}
           </div>
         )}
