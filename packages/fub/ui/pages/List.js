@@ -39,9 +39,9 @@ export default function List(props) {
 
   const handleRunAction = () => {
     if (selectedAction) {
-      const actionForRun = currentLayout.listActions.find(
-        (action) => action.name == selectedAction
-      );
+      const actionForRun = currentLayout.defaultListActions
+        .concat(currentLayout.listActions)
+        .find((action) => action.name == selectedAction);
       actionForRun.run(checkedItems);
     }
   };
@@ -76,6 +76,11 @@ export default function List(props) {
           value={selectedAction}
         >
           <option value="">---</option>
+          {currentLayout.defaultListActions.map((action) => (
+            <option key={action.name} value={action.name}>
+              {action.title}
+            </option>
+          ))}
           {currentLayout.listActions.map((action) => (
             <option key={action.name} value={action.name}>
               {action.title}
@@ -102,7 +107,7 @@ export default function List(props) {
                   type="checkbox"
                   className="focus:ring-indigo-500 h-4 w-4 text-indigo-600 border-gray-300 rounded"
                   onChange={() => handleCheckAllItems()}
-                  checked={checkedItems.length > 0}
+                  checked={checkedItems.length == currentLayout.data.length}
                 />
               </th>
               {Object.keys(currentLayout.data[0]).map((key, index) => {
@@ -122,7 +127,12 @@ export default function List(props) {
           </thead>
           <tbody className="bg-white divide-y divide-gray-200">
             {currentLayout.data.map((dataItem, rowIndex) => (
-              <tr key={rowIndex}>
+              <tr
+                key={rowIndex}
+                className={
+                  checkedItems.includes(dataItem) ? "bg-yellow-100" : ""
+                }
+              >
                 <td className="w-4 pl-4 py-4 whitespace-nowrap">
                   <input
                     type="checkbox"

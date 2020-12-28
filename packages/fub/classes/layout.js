@@ -1,5 +1,6 @@
 import React from "react";
 import { Route } from "react-router-dom";
+import { ListAction } from "./ListAction";
 import Add from "./Add";
 import List from "./List";
 import Edit from "./Edit";
@@ -31,6 +32,12 @@ export default class Layout {
 
   // Actions aplied for batch selected items in list
   listActions = [];
+
+  defaultListActions = [
+    new ListAction("delete", "Delete", (items) => {
+      this.handleDeleteAll(items);
+    }),
+  ];
 
   // Url for add page
   addPath = "/:layoutSlug/add";
@@ -87,6 +94,10 @@ export default class Layout {
 
   handleDeleteOne(uniqFieldValue) {
     console.log(uniqFieldValue);
+  }
+
+  handleDeleteAll(items) {
+    console.log("Delete: ", items);
   }
 
   handleClickPaginationNext() {
