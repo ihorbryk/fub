@@ -5,6 +5,7 @@ import { getLayouts } from "../../services/layout";
 import { url } from "../../tool/route";
 import Layout from "../Layout";
 import NoDataForDisplay from "./NoDataForDisplay";
+import Confirm from "../../ui/Confirm";
 
 export default function List(props) {
   const { layoutSlug } = useParams();
@@ -167,16 +168,19 @@ export default function List(props) {
                   }
                 })}
                 <td className="px-6 py-4 text-right text-sm">
-                  <div
-                    className="inline-block text-red-400 cursor-pointer hover:underline"
-                    onClick={() =>
+                  <Confirm
+                    style="danger"
+                    onOk={() => {
                       currentLayout.handleDeleteOne(
                         dataItem[currentLayout.primaryKey]
-                      )
-                    }
+                      );
+                    }}
+                    icon="trash-2"
                   >
-                    Delete
-                  </div>
+                    <button className="inline-block text-red-400 cursor-pointer hover:underline focus:outline-none">
+                      Delete
+                    </button>
+                  </Confirm>
                 </td>
               </tr>
             ))}
