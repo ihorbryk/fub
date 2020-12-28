@@ -32,7 +32,7 @@ export default function Layout(props) {
     ]);
   };
   return (
-    <div className="bg-gray-100 h-screen">
+    <div className="bg-gray-100 min-h-screen">
       <Header />
       <div className="container mx-auto">
         {props.breadCrumbs && (
