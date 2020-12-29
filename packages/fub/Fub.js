@@ -13,7 +13,7 @@ import Model from "./classes/Model";
 import { registerLayout, getLayouts } from "./services/layout";
 import { ListAction } from "./classes/ListAction";
 import LayoutTemplate from "./ui/Layout";
-import { CustomRoute } from "./classes/CustomPage";
+import { CustomRoute } from "./classes/CustomRoute";
 
 export {
   App,
@@ -53,6 +53,7 @@ export default function Fub(props) {
         <Switch>
           {appInstance.home()}
           {appInstance.getCustomRoutes()}
+          {appInstance.page404()}
           {getLayouts().map((layout) => {
             return layout.pages();
           })}

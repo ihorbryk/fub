@@ -1,5 +1,6 @@
 import React from "react";
 import Home from "./Home";
+import Page404 from "./Page404";
 
 import { Route } from "react-router-dom";
 import AccessDenied from "../ui/pages/AccessDenied";
@@ -15,11 +16,13 @@ export default class App {
   // Custom routes for custom pages
   customRoutes = [];
 
+  homeInstance = new Home();
+  page404Instance = new Page404();
+
   constructor(layouts) {
     layouts.map((layout) => {
       registerLayout(layout);
     });
-    this.homeInstance = new Home();
   }
 
   // Return home router with Home component
@@ -29,6 +32,10 @@ export default class App {
         {this.homeInstance.render()}
       </Route>
     );
+  }
+
+  page404() {
+    return <Route path="/404">{this.page404Instance.render()}</Route>;
   }
 
   getCustomRoutes() {

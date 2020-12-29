@@ -1,5 +1,5 @@
 import React from "react";
-import { Link, useParams } from "react-router-dom";
+import { Link, Redirect, useParams } from "react-router-dom";
 import FeatherIcon from "feather-icons-react";
 import { getLayouts } from "../../services/layout";
 import { url } from "../../tool/route";
@@ -11,6 +11,10 @@ export default function List(props) {
   const { layoutSlug } = useParams();
   const layouts = getLayouts();
   const currentLayout = layouts.find((layout) => layout.slug === layoutSlug);
+
+  if (!currentLayout) {
+    return <Redirect to="/404" />;
+  }
   const listFieldNames = currentLayout.getListFieldNames();
 
   const [checkedItems, setCheckedItems] = React.useState([]);
