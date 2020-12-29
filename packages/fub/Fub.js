@@ -51,6 +51,7 @@ export default function Fub(props) {
     <AppContext.Provider value={app}>
       <Router>
         <Switch>
+          {appInstance.login()}
           {appInstance.home()}
           {appInstance.getCustomRoutes()}
           {getLayouts().map((layout) => {
