@@ -45,6 +45,9 @@ export default function Fub(props) {
 
   const app = {
     appName: appInstance.appName,
+    user: {
+      isLogged: appInstance.isLogged,
+    },
   };
 
   return (
