@@ -1,10 +1,9 @@
 import React from "react";
-import Home from "./Home";
-import Page404 from "./Page404";
 
 import { Route } from "react-router-dom";
-import Home from "./Home";
 import Login from "./Login";
+import Home from "./Home";
+import Page404 from "./Page404";
 import AccessDenied from "../ui/pages/AccessDenied";
 import { registerLayout } from "../services/layout";
 
@@ -23,6 +22,7 @@ export default class App {
 
   homeInstance = new Home();
   page404Instance = new Page404();
+  loginInstance = new Login();
 
   constructor(layouts) {
     layouts.map((layout) => {
@@ -30,11 +30,23 @@ export default class App {
     });
   }
 
+  onLogin(values) {
+    console.log("Login handler", values);
+  }
+
   // Return home router
   home() {
     return (
       <Route exact path={this.homePath}>
         {this.homeInstance.render()}
+      </Route>
+    );
+  }
+
+  login() {
+    return (
+      <Route exact path={this.loginPath}>
+        {this.loginInstance.render({ onLogin: this.onLogin })}
       </Route>
     );
   }
