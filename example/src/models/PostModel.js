@@ -3,14 +3,14 @@ import { CharField, TextField, BooleanField, ChoiceField } from "fub";
 
 export default class PostModel extends Model {
   title = new CharField("Title");
-  body = new TextField("Тело");
-  published = new BooleanField("Опубликовано");
+  body = new TextField("Body");
+  published = new BooleanField("Published");
   animal = new ChoiceField(
-    "Животное",
+    "Animal",
     [
-      ["dog", "Сабака"],
-      ["cat", "Кот"],
-      ["pig", "Свинья"],
+      ["dog", "Dog"],
+      ["cat", "Cat"],
+      ["pig", "Pig"],
     ],
     true
   );

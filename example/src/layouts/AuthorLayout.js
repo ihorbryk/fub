@@ -3,7 +3,7 @@ import AuthorModel from "../models/AuthorModel";
 import { authors } from "../services/author";
 
 export default class AuthorLayout extends Layout {
-  name = "Автор";
+  name = "Author";
   slug = "author";
   data = authors;
   model = new AuthorModel();
