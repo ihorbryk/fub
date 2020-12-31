@@ -1,7 +1,15 @@
 import React from "react";
+import { Redirect } from "react-router-dom";
+import { AppContext } from "../../Fub";
 import Form, { Input } from "../Form";
 
 export default function Login(props) {
+  const appContext = React.useContext(AppContext);
+
+  if (appContext.user.isLogged()) {
+    return <Redirect to={props.loginRedirectPath} />;
+  }
+
   return (
     <div className="bg-gray-100 min-h-screen flex items-center justify-center">
       <div>

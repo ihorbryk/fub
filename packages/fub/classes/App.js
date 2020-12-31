@@ -1,6 +1,6 @@
 import React from "react";
 
-import { Route } from "react-router-dom";
+import { Redirect, Route } from "react-router-dom";
 import Login from "./Login";
 import Home from "./Home";
 import Page404 from "./Page404";
@@ -21,7 +21,9 @@ export default class App {
   customRoutes = [];
 
   homeInstance = new Home();
+
   page404Instance = new Page404();
+
   loginInstance = new Login();
 
   constructor(layouts) {
@@ -30,9 +32,24 @@ export default class App {
     });
   }
 
+  // ########
+  // Handlers
+  // ########
+
   onLogin(values) {
     console.log("Login handler", values);
   }
+
+  isLogged() {
+    console.warn(
+      "You need implement check is user logged by add isLogged method to your App class"
+    );
+    return false;
+  }
+
+  // ######
+  // Routes
+  // ######
 
   // Return home router
   home() {
