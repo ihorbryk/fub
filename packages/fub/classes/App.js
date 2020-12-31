@@ -3,6 +3,8 @@ import Home from "./Home";
 import Page404 from "./Page404";
 
 import { Route } from "react-router-dom";
+import Home from "./Home";
+import Login from "./Login";
 import AccessDenied from "../ui/pages/AccessDenied";
 import { registerLayout } from "../services/layout";
 
@@ -12,6 +14,9 @@ export default class App {
 
   // Url for home page
   homePath = "/";
+
+  // Url for login page
+  loginPath = "/login";
 
   // Custom routes for custom pages
   customRoutes = [];
@@ -25,7 +30,7 @@ export default class App {
     });
   }
 
-  // Return home router with Home component
+  // Return home router
   home() {
     return (
       <Route exact path={this.homePath}>
