@@ -1,6 +1,6 @@
 import React, { useContext } from "react";
 import { Link } from "react-router-dom";
-import { AppContext } from "../Fub";
+import { AppContext } from "../contexts/app";
 
 export default function Header() {
   const appContext = useContext(AppContext);

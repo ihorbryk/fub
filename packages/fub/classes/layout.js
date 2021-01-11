@@ -1,5 +1,6 @@
 import React from "react";
 import { Route } from "react-router-dom";
+import { PrivateRoute } from "../tool/route";
 import { ListAction } from "./ListAction";
 import Add from "./Add";
 import List from "./List";
@@ -42,11 +43,20 @@ export default class Layout {
   // Url for add page
   addPath = "/:layoutSlug/add";
 
+  // Make add page accessible or not for logged users
+  isAddPrivate = true;
+
   // Url for list page
   listPath = "/:layoutSlug";
 
+  // Make list page accessible or not for logged users
+  isListPrivate = true;
+
   // Url for edit page
   editPath = "/:layoutSlug/:id";
+
+  // Make edit page accessible or not for logged users
+  isEditPrivate = true;
 
   paths = {
     add: this.addPath,
@@ -117,6 +127,13 @@ export default class Layout {
   // ###########
 
   list() {
+    if (this.isListPrivate) {
+      return (
+        <PrivateRoute exact path={this.listPath}>
+          {this.listObj.render({ paths: this.paths })}
+        </PrivateRoute>
+      );
+    }
     return (
       <Route exact path={this.listPath}>
         {this.listObj.render({ paths: this.paths })}
@@ -125,6 +142,13 @@ export default class Layout {
   }
 
   add() {
+    if (this.isAddPrivate) {
+      return (
+        <PrivateRoute exact path={this.addPath}>
+          {this.addObj.render({ paths: this.paths })}
+        </PrivateRoute>
+      );
+    }
     return (
       <Route exact path={this.addPath}>
         {this.addObj.render({ paths: this.paths })}
@@ -133,6 +157,13 @@ export default class Layout {
   }
 
   edit() {
+    if (this.isEditPrivate) {
+      return (
+        <PrivateRoute exact path={this.editPath}>
+          {this.editObj.render({ paths: this.paths })}
+        </PrivateRoute>
+      );
+    }
     return (
       <Route exact path={this.editPath}>
         {this.editObj.render({ paths: this.paths })}

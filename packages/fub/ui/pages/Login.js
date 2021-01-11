@@ -1,6 +1,6 @@
 import React from "react";
 import { Redirect } from "react-router-dom";
-import { AppContext } from "../../Fub";
+import { AppContext } from "../../contexts/app";
 import Form, { Input } from "../Form";
 
 export default function Login(props) {

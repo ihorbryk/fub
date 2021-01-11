@@ -6,6 +6,7 @@ import Home from "./Home";
 import Page404 from "./Page404";
 import AccessDenied from "../ui/pages/AccessDenied";
 import { registerLayout } from "../services/layout";
+import { PrivateRoute } from "../tool/route";
 
 export default class App {
   // Base app name (displayed in header component)
@@ -13,6 +14,9 @@ export default class App {
 
   // Url for home page
   homePath = "/";
+
+  // Make home page accessible only for logged user
+  isHomePrivate = true;
 
   // Url for login page
   loginPath = "/login";
@@ -53,6 +57,13 @@ export default class App {
 
   // Return home router
   home() {
+    if (this.isHomePrivate) {
+      return (
+        <PrivateRoute exact path={this.homePath}>
+          {this.homeInstance.render()}
+        </PrivateRoute>
+      );
+    }
     return (
       <Route exact path={this.homePath}>
         {this.homeInstance.render()}

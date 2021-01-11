@@ -5,7 +5,10 @@ import PostLayout from "./layouts/PostLayout";
 import LoremIpsum from "./pages/LoremIpsum";
 
 class Dashboar extends App {
-  customRoutes = [new CustomRoute("/lorem", <LoremIpsum />)];
+  customRoutes = [
+    new CustomRoute("/lorem", <LoremIpsum />),
+    new CustomRoute("/open-lorem", <LoremIpsum />, false),
+  ];
 
   isLogged() {
     return false;

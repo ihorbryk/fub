@@ -14,6 +14,7 @@ import { registerLayout, getLayouts } from "./services/layout";
 import { ListAction } from "./classes/ListAction";
 import LayoutTemplate from "./ui/Layout";
 import { CustomRoute } from "./classes/CustomRoute";
+import { AppContext } from "./contexts/app";
 
 export {
   App,
@@ -29,8 +30,6 @@ export {
   CustomRoute,
   LayoutTemplate,
 };
-
-export const AppContext = React.createContext();
 
 export default function Fub(props) {
   const getAppInstance = () => {
