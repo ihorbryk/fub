@@ -42,46 +42,48 @@ export default function Add(props) {
           }}
         >
           {({ values, handleFieldChange, handleFormSubmit }) => (
-            <div className="shadow overflow-hidden border-b border-gray-200 sm:rounded-lg bg-white">
-              <form onSubmit={handleFormSubmit} className="divide-y">
-                {Object.keys(fields).map((key) => (
-                  <div key={key} className="flex items-center py-3 px-3">
-                    <div className="w-64">
-                      <label
-                        htmlFor={key}
-                        className="block text-sm text-gray-700"
-                      >
-                        {fields[key].label}
-                      </label>
+            <React.Fragment>
+              <form onSubmit={handleFormSubmit}>
+                <div className="shadow overflow-hidden border-b border-gray-200 sm:rounded-lg bg-white divide-y">
+                  {Object.keys(fields).map((key) => (
+                    <div key={key} className="flex items-center py-3 px-3">
+                      <div className="w-64">
+                        <label
+                          htmlFor={key}
+                          className="block text-sm text-gray-700"
+                        >
+                          {fields[key].label}
+                        </label>
+                      </div>
+                      <div className="w-full">
+                        {fields[key].render({
+                          id: key,
+                          name: key,
+                          value: values[key],
+                          choices: fields[key].choices,
+                          onChange: (e) =>
+                            handleFieldChange(e.target.name, e.target.value),
+                        })}
+                      </div>
                     </div>
-                    <div className="w-full">
-                      {fields[key].render({
-                        id: key,
-                        name: key,
-                        value: values[key],
-                        choices: fields[key].choices,
-                        onChange: (e) =>
-                          handleFieldChange(e.target.name, e.target.value),
-                      })}
-                    </div>
-                  </div>
-                ))}
-                <div className="py-3 px-3 text-right bg-gray-100 rounded-b-lg">
-                  <Link
-                    to={url(props.paths.list, [currentLayout.slug])}
-                    className="ml-2 inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md bg-white hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-                  >
-                    Cancel
-                  </Link>
-                  <button
-                    type="submit"
-                    className="ml-2 inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-                  >
-                    Update
-                  </button>
+                  ))}
                 </div>
               </form>
-            </div>
+              <div className="py-4 text-right bg-gray-100 rounded-b-lg">
+                <Link
+                  to={url(props.paths.list, [currentLayout.slug])}
+                  className="ml-2 inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md bg-white hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                >
+                  Cancel
+                </Link>
+                <button
+                  type="submit"
+                  className="ml-2 inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                >
+                  Update
+                </button>
+              </div>
+            </React.Fragment>
           )}
         </Form>
       </div>
