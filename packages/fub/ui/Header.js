@@ -1,9 +1,78 @@
 import React, { useContext } from "react";
 import { Link } from "react-router-dom";
 import { AppContext } from "../contexts/app";
+import FeatherIcon from "feather-icons-react";
+
+export const CustomUserHeaderLink = (props) => {
+  return (
+    <Link
+      to={props.path}
+      className="block cursor-pointer text-gray-700 hover:bg-gray-100 hover:text-gray-900 py-2 px-4"
+    >
+      {props.label}
+    </Link>
+  );
+};
+
+const UserDropDown = (props) => {
+  const appContext = React.useContext(AppContext);
+
+  const [isOpen, setIsOpen] = React.useState(false);
+
+  const wrapperRef = React.useRef(null);
+
+  React.useEffect(() => {
+    function handleClickOutside(event) {
+      if (wrapperRef.current && !wrapperRef.current.contains(event.target)) {
+        setIsOpen(false);
+      }
+    }
+
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [wrapperRef]);
+
+  const exitHandler = () => {
+    appContext.user.onExit();
+    setIsOpen(false);
+  };
+
+  return (
+    <div ref={wrapperRef}>
+      <div
+        onClick={() => setIsOpen(!isOpen)}
+        className="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium flex items-center cursor-pointer"
+      >
+        {props.title} <FeatherIcon icon="chevron-down" size={18} />
+      </div>
+      {isOpen && (
+        <div className="absolute right-0 bg-white w-max min-w-full divide-y shadow-2xl rounded-md z-10 text-sm">
+          {appContext.user.customUserHeaderLinks.length > 0 && (
+            <div className="py-1">
+              {appContext.user.customUserHeaderLinks.map((link, i) =>
+                link.render(i)
+              )}
+            </div>
+          )}
+          <div className="py-1">
+            <div
+              className="cursor-pointer text-gray-700 hover:bg-gray-100 hover:text-gray-900 py-2 px-4"
+              onClick={exitHandler}
+            >
+              Exit
+            </div>
+          </div>
+        </div>
+      )}
+    </div>
+  );
+};
 
 export default function Header() {
   const appContext = useContext(AppContext);
+
   return (
     <div className="bg-gray-800">
       <div className="container mx-auto">
@@ -38,7 +107,7 @@ export default function Header() {
           <div className="hidden md:block">
             <div className="ml-4 flex items-center md:ml-6">
               <div className="ml-3 relative">
-                {/* TODO: implement right part of menu */}
+                <UserDropDown title={appContext.user.name} />
               </div>
             </div>
           </div>

@@ -1,6 +1,6 @@
 import React from "react";
 
-import { Redirect, Route } from "react-router-dom";
+import { Route } from "react-router-dom";
 import Login from "./Login";
 import Home from "./Home";
 import Page404 from "./Page404";
@@ -11,6 +11,9 @@ import { PrivateRoute } from "../tool/route";
 export default class App {
   // Base app name (displayed in header component)
   appName = "Dashboard";
+
+  // Base user name (displayed in header component)
+  baseUserName = "Admin";
 
   // Url for home page
   homePath = "/";
@@ -23,6 +26,9 @@ export default class App {
 
   // Custom routes for custom pages
   customRoutes = [];
+
+  // Custom links used in header user dropdown
+  customUserHeaderLinks = [];
 
   homeInstance = new Home();
 
@@ -41,7 +47,11 @@ export default class App {
   // ########
 
   onLogin(values) {
-    console.log("Login handler", values);
+    console.warn("Define your 'onLogin' handler method", values);
+  }
+
+  onExit() {
+    console.warn("Define your 'onExit' handler method");
   }
 
   isLogged() {

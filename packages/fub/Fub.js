@@ -12,6 +12,7 @@ import Layout from "./classes/Layout";
 import Model from "./classes/Model";
 import { registerLayout, getLayouts } from "./services/layout";
 import { ListAction } from "./classes/ListAction";
+import { CustomUserHeaderLink } from "./classes/CustomUserHeaderLink";
 import LayoutTemplate from "./ui/Layout";
 import { CustomRoute } from "./classes/CustomRoute";
 import { AppContext } from "./contexts/app";
@@ -29,6 +30,7 @@ export {
   ListAction,
   CustomRoute,
   LayoutTemplate,
+  CustomUserHeaderLink,
 };
 
 export default function Fub(props) {
@@ -45,7 +47,10 @@ export default function Fub(props) {
   const app = {
     appName: appInstance.appName,
     user: {
+      name: appInstance.baseUserName,
       isLogged: appInstance.isLogged,
+      onExit: appInstance.onExit,
+      customUserHeaderLinks: appInstance.customUserHeaderLinks,
     },
   };
 
