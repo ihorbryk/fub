@@ -16,7 +16,7 @@ import { CustomUserHeaderLink } from "./classes/CustomUserHeaderLink";
 import LayoutTemplate from "./ui/Layout";
 import { CustomRoute } from "./classes/CustomRoute";
 import { AppContext } from "./contexts/app";
-import Notification from "./ui/Notification";
+import { NotificationContextProvider } from "./ui/Notification";
 import { NotificationItem } from "./classes/NotificationItem";
 
 export {
@@ -59,7 +59,7 @@ export default function Fub(props) {
 
   return (
     <AppContext.Provider value={app}>
-      <Notification>
+      <NotificationContextProvider>
         <Router>
           <Switch>
             {appInstance.login()}
@@ -71,7 +71,7 @@ export default function Fub(props) {
             })}
           </Switch>
         </Router>
-      </Notification>
+      </NotificationContextProvider>
     </AppContext.Provider>
   );
 }

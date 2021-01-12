@@ -13,9 +13,6 @@ export default class Layout {
   // Field used as entity slug in routes
   slug = "";
 
-  // Array of model objects
-  data = [];
-
   // Object discribe structure of entity
   model = null;
 
@@ -77,19 +74,19 @@ export default class Layout {
   // Getters
   // #######
 
-  getListFields() {
-    if (this.data.length === 0) {
+  getListFields(data) {
+    if (data && data.length === 0) {
       return [];
     }
     if (this.listFields.length > 0) {
       return this.listFields;
     }
-    return Object.keys(this.data[0]);
+    return Object.keys(data[0]);
   }
 
-  getListFieldNames() {
+  getListFieldNames(data) {
     if (this.listFieldNames.length === 0) {
-      return this.getListFields().reduce((acc, field) => {
+      return this.getListFields(data).reduce((acc, field) => {
         acc[field] = field;
         return acc;
       }, {});
@@ -99,6 +96,10 @@ export default class Layout {
 
   getPaginationText() {
     return "";
+  }
+
+  listFetch() {
+    console.warn("Implement listFetch method in your layout");
   }
 
   // ########
@@ -133,7 +134,9 @@ export default class Layout {
     if (this.isListPrivate) {
       return (
         <PrivateRoute exact path={this.listPath}>
-          {this.listObj.render({ paths: this.paths })}
+          {this.listObj.render({
+            paths: this.paths,
+          })}
         </PrivateRoute>
       );
     }

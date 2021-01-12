@@ -1,9 +1,69 @@
 import React from "react";
 import FeatherIcon from "feather-icons-react";
 import { NotificationContext } from "../contexts/notification";
-import { NotificationItem as NIClass } from "../classes/NotificationItem";
 
 export default function Notification(props) {
+  const state = React.useContext(NotificationContext);
+
+  const handleDelete = (id) => {
+    setTimeout(() => {
+      state.delete(id);
+    }, 300);
+  };
+
+  const handleHide = (id) => {
+    state.hide(id);
+  };
+
+  const handleView = (id) => {
+    state.view(id);
+  };
+
+  const handleClearAll = () => {
+    state.clearAll();
+  };
+
+  return (
+    <React.Fragment>
+      <div
+        className="absolute px-3 py-3 top-20 right-4 z-50 overflow-y-auto"
+        style={{ maxHeight: "calc(100% - 6rem)" }}
+      >
+        {state.showAll && state.notifications.size > 0 && (
+          <div className="w-full flex justify-center mb-2">
+            <div
+              className="text-xs rounded-full px-3 py-1 bg-gray-300 border-1 border-gray-500 cursor-pointer shadow"
+              onClick={handleClearAll}
+            >
+              Clear all
+            </div>
+          </div>
+        )}
+        {state.notifications.size > 0 &&
+          Array.from(state.notifications)
+            .sort((a, b) => b.date - a.date)
+            .map((item) => {
+              return (
+                <NotificationItem
+                  key={item.id}
+                  type={item.type}
+                  title={item.title}
+                  message={item.message}
+                  displayedDate={item.displayedDate}
+                  isHidden={item.isHidden}
+                  onDelete={() => handleDelete(item.id)}
+                  onHide={() => handleHide(item.id)}
+                  onView={() => handleView(item.id)}
+                  showAll={state.showAll}
+                />
+              );
+            })}
+      </div>
+    </React.Fragment>
+  );
+}
+
+export function NotificationContextProvider(props) {
   function reducer(state, action) {
     switch (action.type) {
       case "add":
@@ -76,6 +136,21 @@ export default function Notification(props) {
     toggle: () => {
       dispatch({ type: "toggle" });
     },
+    add: (newItem) => {
+      dispatch({ type: "add", newItem });
+    },
+    delete: (id) => {
+      dispatch({ type: "delete", id });
+    },
+    clearAll: (id) => {
+      dispatch({ type: "clearAll" });
+    },
+    hide: (id) => {
+      dispatch({ type: "hide", id });
+    },
+    view: (id) => {
+      dispatch({ type: "view", id });
+    },
     viewAll: () => {
       dispatch({ type: "viewAll" });
     },
@@ -83,64 +158,10 @@ export default function Notification(props) {
 
   const [state, dispatch] = React.useReducer(reducer, initialState);
 
-  const handleDelete = (id) => {
-    setTimeout(() => {
-      dispatch({ type: "delete", id });
-    }, 300);
-  };
-
-  const handleHide = (id) => {
-    dispatch({ type: "hide", id });
-  };
-
-  const handleView = (id) => {
-    dispatch({ type: "view", id });
-  };
-
-  const handleClearAll = () => {
-    dispatch({ type: "clearAll" });
-  };
-
   return (
-    <React.Fragment>
-      <div
-        className="absolute px-3 py-3 top-20 right-4 z-50 overflow-y-auto"
-        style={{ maxHeight: "calc(100% - 6rem)" }}
-      >
-        {state.showAll && state.notifications.size > 0 && (
-          <div className="w-full flex justify-center mb-2">
-            <div
-              className="text-xs rounded-full px-3 py-1 bg-gray-300 border-1 border-gray-500 cursor-pointer shadow"
-              onClick={handleClearAll}
-            >
-              Clear all
-            </div>
-          </div>
-        )}
-        {state.notifications.size > 0 &&
-          Array.from(state.notifications)
-            .sort((a, b) => b.date - a.date)
-            .map((item) => {
-              return (
-                <NotificationItem
-                  key={item.id}
-                  type={item.type}
-                  title={item.title}
-                  message={item.message}
-                  displayedDate={item.displayedDate}
-                  isHidden={item.isHidden}
-                  onDelete={() => handleDelete(item.id)}
-                  onHide={() => handleHide(item.id)}
-                  onView={() => handleView(item.id)}
-                  showAll={state.showAll}
-                />
-              );
-            })}
-      </div>
-      <NotificationContext.Provider value={state}>
-        {props.children}
-      </NotificationContext.Provider>
-    </React.Fragment>
+    <NotificationContext.Provider value={state}>
+      {props.children}
+    </NotificationContext.Provider>
   );
 }
 

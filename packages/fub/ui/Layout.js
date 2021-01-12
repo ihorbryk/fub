@@ -2,6 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import FeatherIcon from "feather-icons-react";
 import Header from "./Header";
+import Notification from "./Notification";
 
 export default function Layout(props) {
   const breadCrumbsBuilder = (breadCrumbsArray) => {
@@ -34,6 +35,7 @@ export default function Layout(props) {
   return (
     <div className="bg-gray-100 min-h-screen">
       <Header />
+      <Notification />
       <div className="container mx-auto">
         {props.breadCrumbs && (
           <div className="flex pt-12 items-center text-gray-500 text-xs">
