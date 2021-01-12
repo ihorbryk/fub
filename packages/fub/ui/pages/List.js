@@ -15,6 +15,7 @@ export default function List(props) {
   if (!currentLayout) {
     return <Redirect to="/404" />;
   }
+
   const listFieldNames = currentLayout.getListFieldNames();
 
   const [checkedItems, setCheckedItems] = React.useState([]);
@@ -162,8 +163,12 @@ export default function List(props) {
                           >
                             {dataItem[key]}
                           </Link>
+                        ) : currentLayout.listFieldCustomLayout[key] ? (
+                          currentLayout.listFieldCustomLayout[key](
+                            dataItem[key]
+                          )
                         ) : (
-                          dataItem[key]
+                          <DataItem value={dataItem[key]} />
                         )}
                       </td>
                     );
@@ -219,4 +224,24 @@ export default function List(props) {
       )}
     </Layout>
   );
+}
+
+function DataItem(props) {
+  if (typeof props.value === "boolean" && props.value) {
+    return (
+      <div className="text-green-500">
+        <FeatherIcon icon="check-square" size={20} />
+      </div>
+    );
+  }
+
+  if (typeof props.value === "boolean" && !props.value) {
+    return (
+      <div className="text-red-500">
+        <FeatherIcon icon="x-square" size={20} />
+      </div>
+    );
+  }
+
+  return props.value;
 }

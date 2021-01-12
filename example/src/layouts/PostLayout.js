@@ -8,6 +8,11 @@ export default class PostLayout extends Layout {
   data = posts;
   model = new PostModel();
   listFields = ["id", "body", "published", "animal"];
+  listFieldCustomLayout = {
+    animal: (value) => {
+      return <div>!!!! {value} !!!!</div>;
+    },
+  };
   // listActions = [
   //   new ListAction("delete", "Удалить", (items) => {
   //     console.log("delete", items);

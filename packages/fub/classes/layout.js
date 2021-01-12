@@ -34,6 +34,9 @@ export default class Layout {
   // Actions aplied for batch selected items in list
   listActions = [];
 
+  // Functions for custom render fields in list
+  listFieldCustomLayout = {};
+
   defaultListActions = [
     new ListAction("delete", "Delete", (items) => {
       this.handleDeleteAll(items);
