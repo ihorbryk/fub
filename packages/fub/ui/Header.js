@@ -2,6 +2,7 @@ import React, { useContext } from "react";
 import { Link } from "react-router-dom";
 import { AppContext } from "../contexts/app";
 import FeatherIcon from "feather-icons-react";
+import { NotificationContext } from "../contexts/notification";
 
 export const CustomUserHeaderLink = (props) => {
   return (
@@ -107,12 +108,57 @@ export default function Header() {
           <div className="hidden md:block">
             <div className="ml-4 flex items-center md:ml-6">
               <div className="ml-3 relative">
+                <Notifications />
+              </div>
+              <div className="ml-3 relative">
                 <UserDropDown title={appContext.user.name} />
               </div>
             </div>
           </div>
         </div>
       </div>
+    </div>
+  );
+}
+
+function Notifications(props) {
+  const notificationContext = React.useContext(NotificationContext);
+
+  const handleToggleNotification = () => {
+    notificationContext.toggle();
+    notificationContext.viewAll();
+  };
+
+  let pressedClass = "";
+
+  if (notificationContext.showAll) {
+    pressedClass = "bg-gray-700";
+  }
+
+  const countNotViewed = Array.from(notificationContext.notifications).filter(
+    (item) => !item.isViewed
+  ).length;
+
+  return (
+    <div
+      onClick={handleToggleNotification}
+      className={`${pressedClass} relative text-gray-300 cursor-pointer hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium`}
+    >
+      {notificationContext.showAll ? (
+        <FeatherIcon icon="bell" className="transform rotate-45" />
+      ) : (
+        <FeatherIcon icon="bell" />
+      )}
+      {countNotViewed > 0 && (
+        <React.Fragment>
+          <div className="text-xs absolute bottom-2 right-2 px-1 bg-red-500 rounded-full">
+            {countNotViewed}
+          </div>
+          <div className="text-xs animate-ping absolute bottom-2 right-2 px-1 bg-red-500 rounded-full">
+            {countNotViewed}
+          </div>
+        </React.Fragment>
+      )}
     </div>
   );
 }

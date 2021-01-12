@@ -16,6 +16,8 @@ import { CustomUserHeaderLink } from "./classes/CustomUserHeaderLink";
 import LayoutTemplate from "./ui/Layout";
 import { CustomRoute } from "./classes/CustomRoute";
 import { AppContext } from "./contexts/app";
+import Notification from "./ui/Notification";
+import { NotificationItem } from "./classes/NotificationItem";
 
 export {
   App,
@@ -31,6 +33,7 @@ export {
   CustomRoute,
   LayoutTemplate,
   CustomUserHeaderLink,
+  NotificationItem,
 };
 
 export default function Fub(props) {
@@ -56,17 +59,19 @@ export default function Fub(props) {
 
   return (
     <AppContext.Provider value={app}>
-      <Router>
-        <Switch>
-          {appInstance.login()}
-          {appInstance.home()}
-          {appInstance.getCustomRoutes()}
-          {appInstance.page404()}
-          {getLayouts().map((layout) => {
-            return layout.pages();
-          })}
-        </Switch>
-      </Router>
+      <Notification>
+        <Router>
+          <Switch>
+            {appInstance.login()}
+            {appInstance.home()}
+            {appInstance.getCustomRoutes()}
+            {appInstance.page404()}
+            {getLayouts().map((layout) => {
+              return layout.pages();
+            })}
+          </Switch>
+        </Router>
+      </Notification>
     </AppContext.Provider>
   );
 }
