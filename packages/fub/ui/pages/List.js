@@ -147,29 +147,19 @@ export default function List(props) {
                       checked={checkedItems.includes(dataItem)}
                     />
                   </td>
-                  {Object.keys(dataItem).map((key, columnIndex) => {
-                    if (currentLayout.getListFields(data).includes(key)) {
+                  {Object.keys(dataItem).map((dataKey, columnIndex) => {
+                    if (currentLayout.getListFields(data).includes(dataKey)) {
                       return (
                         <td
-                          key={dataItem[key]}
+                          key={dataItem[dataKey]}
                           className="px-6 py-4 whitespace-nowrap truncate"
                         >
-                          {columnIndex === 0 ? (
-                            <Link
-                              to={`/${currentLayout.slug}/${
-                                dataItem[currentLayout.primaryKey]
-                              }`}
-                              className="text-blue-500 hover:text-blue-400"
-                            >
-                              {dataItem[key]}
-                            </Link>
-                          ) : currentLayout.listFieldCustomLayout[key] ? (
-                            currentLayout.listFieldCustomLayout[key](
-                              dataItem[key]
-                            )
-                          ) : (
-                            <DataItem value={dataItem[key]} />
-                          )}
+                          <DataItemWrapper
+                            currentLayout={currentLayout}
+                            dataItem={dataItem}
+                            dataKey={dataKey}
+                            columnIndex={columnIndex}
+                          />
                         </td>
                       );
                     } else {
@@ -248,6 +238,64 @@ function Wrapper(props) {
     >
       {props.children}
     </Layout>
+  );
+}
+
+function DataItemWrapper(props) {
+  if (
+    props.currentLayout.listLinkField &&
+    props.currentLayout.listLinkField === props.dataKey
+  ) {
+    return (
+      <LinkDataItemDecorator
+        currentLayout={props.currentLayout}
+        dataItem={props.dataItem}
+      >
+        {props.currentLayout.listFieldCustomLayout[props.dataKey] ? (
+          props.currentLayout.listFieldCustomLayout[props.dataKey](
+            props.dataItem[props.dataKey]
+          )
+        ) : (
+          <DataItem value={props.dataItem[props.dataKey]} />
+        )}
+      </LinkDataItemDecorator>
+    );
+  } else if (!props.currentLayout.listLinkField && props.columnIndex === 0) {
+    return (
+      <LinkDataItemDecorator
+        currentLayout={props.currentLayout}
+        dataItem={props.dataItem}
+      >
+        {props.currentLayout.listFieldCustomLayout[props.dataKey] ? (
+          props.currentLayout.listFieldCustomLayout[props.dataKey](
+            props.dataItem[props.dataKey]
+          )
+        ) : (
+          <DataItem value={props.dataItem[props.dataKey]} />
+        )}
+      </LinkDataItemDecorator>
+    );
+  }
+
+  return props.currentLayout.listFieldCustomLayout[props.dataKey] ? (
+    props.currentLayout.listFieldCustomLayout[props.dataKey](
+      props.dataItem[props.dataKey]
+    )
+  ) : (
+    <DataItem value={props.dataItem[props.dataKey]} />
+  );
+}
+
+function LinkDataItemDecorator(props) {
+  return (
+    <Link
+      to={`/${props.currentLayout.slug}/${
+        props.dataItem[props.currentLayout.primaryKey]
+      }`}
+      className="text-blue-500 hover:text-blue-400"
+    >
+      {props.children}
+    </Link>
   );
 }
 

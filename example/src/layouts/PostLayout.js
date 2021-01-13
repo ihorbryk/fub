@@ -10,6 +10,8 @@ export default class PostLayout extends Layout {
 
   listFields = ["id", "userId", "title", "body"];
 
+  listLinkField = "title";
+
   listFieldCustomLayout = {
     body: (value) => {
       return value.substring(0, 20) + "...";

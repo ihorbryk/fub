@@ -58,6 +58,9 @@ export default class Layout {
   // Make edit page accessible or not for logged users
   isEditPrivate = true;
 
+  // Field use as link to edit page
+  listLinkField = null;
+
   paths = {
     add: this.addPath,
     list: this.listPath,
