@@ -6,6 +6,9 @@ import { getLayouts } from "../../services/layout";
 import Layout from "../Layout";
 import Form from "../Form";
 import { url } from "../../tool/route";
+import { useFetchData } from "../../tool/hooks";
+import LoadingPleceholder from "../LoadingPleceholder";
+import NoDataForDisplay from "../NoDataForDisplay";
 
 export default function Edit(props) {
   const { layoutSlug, id } = useParams();
@@ -14,12 +17,28 @@ export default function Edit(props) {
     return layout.slug === layoutSlug;
   });
 
-  const currentData = currentLayout.data.find(
-    (item) => item[currentLayout.primaryKey] == id
-  );
+  const { data, loading, error } = useFetchData(currentLayout.editFetch, {
+    id,
+  });
 
-  if (!currentData) {
-    return <div>No data</div>;
+  if (loading) {
+    return (
+      <Wrapper currentLayout={currentLayout} paths={props.paths}>
+        <LoadingPleceholder />
+      </Wrapper>
+    );
+  }
+
+  if (
+    !data ||
+    typeof data !== "object" ||
+    (Object.keys(data).length === 0 && data.constructor === Object)
+  ) {
+    return (
+      <Wrapper currentLayout={currentLayout} paths={props.paths}>
+        <NoDataForDisplay />
+      </Wrapper>
+    );
   }
 
   const fields = Object.keys(currentLayout.model).reduce((acc, key) => {
@@ -30,18 +49,11 @@ export default function Edit(props) {
   }, {});
 
   return (
-    <Layout
-      title={`Editing ${currentLayout.name}`}
-      breadCrumbs={[
-        ["/", <FeatherIcon icon="home" size="14" />],
-        [url(props.paths.list, [currentLayout.slug]), currentLayout.name],
-        ["", "Edit"],
-      ]}
-    >
+    <Wrapper currentLayout={currentLayout} paths={props.paths}>
       <div className="">
         <Form
           initValues={Object.keys(fields).reduce((acc, key) => {
-            acc[key] = currentData[key];
+            acc[key] = data[key];
             return acc;
           }, {})}
           onSubmit={(values) => {
@@ -95,6 +107,24 @@ export default function Edit(props) {
           )}
         </Form>
       </div>
+    </Wrapper>
+  );
+}
+
+function Wrapper(props) {
+  return (
+    <Layout
+      title={`Editing ${props.currentLayout.name}`}
+      breadCrumbs={[
+        ["/", <FeatherIcon icon="home" size="14" />],
+        [
+          url(props.paths.list, [props.currentLayout.slug]),
+          props.currentLayout.name,
+        ],
+        ["", "Edit"],
+      ]}
+    >
+      {props.children}
     </Layout>
   );
 }

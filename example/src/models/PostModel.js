@@ -6,7 +6,7 @@ export default class PostModel extends Model {
   userId = new CharField("userId");
   title = new CharField("Title");
   body = new TextField("Body");
-  published = new BooleanField("Published");
+  // published = new BooleanField("Published");
   // animal = new ChoiceField(
   //   "Animal",
   //   [

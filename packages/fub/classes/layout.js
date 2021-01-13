@@ -98,8 +98,16 @@ export default class Layout {
     return "";
   }
 
+  // ##########
+  // Data fetch
+  // ##########
+
   listFetch() {
     console.warn("Implement listFetch method in your layout");
+  }
+
+  editFetch() {
+    console.warn("Implement editFetch method in your layout");
   }
 
   // ########

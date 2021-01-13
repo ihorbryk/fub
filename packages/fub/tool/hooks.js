@@ -2,7 +2,7 @@ import React from "react";
 import { NotificationItem } from "../classes/NotificationItem";
 import { NotificationContext } from "../contexts/notification";
 
-export function useFetchData(fetchFn) {
+export function useFetchData(fetchFn, params = {}) {
   const notificationContext = React.useContext(NotificationContext);
   const [data, setData] = React.useState(null);
   const [loading, setLoading] = React.useState(false);
@@ -12,12 +12,15 @@ export function useFetchData(fetchFn) {
   const isMounted = mountedRef.current;
 
   const fetchMemoFunction = React.useCallback(() => {
-    fetchFn({
-      setData,
-      setLoading,
-      setError,
-      isMounted,
-    });
+    fetchFn(
+      {
+        setData,
+        setLoading,
+        setError,
+        isMounted,
+      },
+      params
+    );
   }, []);
 
   React.useEffect(async () => {
