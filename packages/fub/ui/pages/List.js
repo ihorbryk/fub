@@ -104,7 +104,7 @@ export default function List(props) {
             Selected {checkedItems.length} objects from {data.length}
           </span>
         </div>
-        <div className="shadow overflow-hidden border-gray-200 sm:rounded-lg">
+        <div className="shadow overflow-x-auto border-gray-200 sm:rounded-lg">
           <table className="table-auto min-w-full">
             <thead>
               <tr>
