@@ -1,0 +1,41 @@
+{
+  "name": "fub",
+  "version": "0.0.1",
+  "private": true,
+  "main": "dist/fub.js",            
+  "umd:main": "dist/fub.umd.js",    
+  "module": "dist/fub.m.js",        
+  "esmodule": "dist/fub.modern.js", 
+  "source": "Fub.js",
+  "scripts": {
+    "build": "microbundle-crl --no-compress",
+    "start": "microbundle-crl watch --no-compress"
+  },
+  "dependencies": {
+    "feather-icons-react": "^0.4.1",
+    "react": "17.0.1",
+    "react-dom": "17.0.1",
+    "react-router-dom": "5.2.0"
+  },
+  "devDependencies": {
+    "microbundle-crl": "^0.13.11"
+  },
+  "eslintConfig": {
+    "extends": [
+      "react-app",
+      "react-app/jest"
+    ]
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  }
+}
